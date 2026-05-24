@@ -1,0 +1,161 @@
+PEMINJAMANALATIKHBARUKK/
+│
+├── app/
+│   │
+│   ├── Http/
+│   │   │
+│   │   ├── Controllers/
+│   │   │   │
+│   │   │   ├── Auth/
+│   │   │   │   ├── ControllerLogin.php
+│   │   │   │   ├── ControllerLogout.php
+│   │   │   │   └── ControllerRegister.php
+│   │   │   │
+│   │   │   ├── Dashboard/
+│   │   │   │   ├── ControllerDashboardAdmin.php
+│   │   │   │   ├── ControllerDashboardPetugas.php
+│   │   │   │   └── ControllerDashboardPeminjam.php
+│   │   │   │
+│   │   │   ├── Master/
+│   │   │   │   ├── ControllerUser.php
+│   │   │   │   ├── ControllerKategori.php
+│   │   │   │   ├── ControllerAlat.php
+│   │   │   │   └── ControllerLogActivity.php
+│   │   │   │
+│   │   │   ├── Transaksi/
+│   │   │   │   ├── ControllerPeminjaman.php
+│   │   │   │   └── ControllerPengembalian.php
+│   │   │   │
+│   │   │   ├── Laporan/
+│   │   │   │   └── ControllerLaporan.php
+│   │   │   │
+│   │   │   └── Landing/
+│   │   │       └── ControllerLanding.php
+│   │   │
+│   │   └── Middleware/
+│   │       └── RoleMiddleware.php
+│   │
+│   ├── Models/
+│   │   ├── ModelUser.php
+│   │   ├── ModelKategori.php
+│   │   ├── ModelAlat.php
+│   │   ├── ModelPeminjaman.php
+│   │   ├── ModelPengembalian.php
+│   │   └── ModelLogActivity.php
+│   │
+│   └── Providers/
+│
+├── bootstrap/
+│
+├── config/
+│
+├── database/
+│   │
+│   ├── migrations/
+│   │   └── migrasipeminjamanalat.php
+│   │
+│   ├── seeders/
+│   │   ├── DatabaseSeeder.php
+│   │   └── SeederPeminjamanAlat.php
+│   │
+│   └── database.sqlite
+│
+├── public/
+│   │
+│   ├── dist/
+│   │   └── adminlte/
+│   │
+│   ├── plugins/
+│   │
+│   ├── foto/
+│   │   ├── alat/
+│   │   └── user/
+│   │
+│   └── index.php
+│
+├── resources/
+│   │
+│   ├── css/
+│   ├── js/
+│   │
+│   ├── views/
+│   │   │
+│   │   ├── layouts/
+│   │   │   │
+│   │   │   ├── admin/
+│   │   │   │   ├── navbar.blade.php
+│   │   │   │   ├── sidebar.blade.php
+│   │   │   │   └── footer.blade.php
+│   │   │   │
+│   │   │   ├── petugas/
+│   │   │   │   ├── navbar.blade.php
+│   │   │   │   ├── sidebar.blade.php
+│   │   │   │   └── footer.blade.php
+│   │   │   │
+│   │   │   ├── peminjam/
+│   │   │   │   ├── navbar.blade.php
+│   │   │   │   ├── sidebar.blade.php
+│   │   │   │   └── footer.blade.php
+│   │   │   │
+│   │   │   ├── landing/
+│   │   │   │   ├── navbar.blade.php
+│   │   │   │   └── footer.blade.php
+│   │   │   │
+│   │   │   ├── appadmin.blade.php
+│   │   │   ├── apppetugas.blade.php
+│   │   │   ├── apppeminjam.blade.php
+│   │   │   └── applanding.blade.php
+│   │   │
+│   │   ├── auth/
+│   │   │   ├── login.blade.php
+│   │   │   └── register.blade.php
+│   │   │
+│   │   ├── admin/
+│   │   │   │
+│   │   │   ├── dashboard/
+│   │   │   │   └── index.blade.php
+│   │   │   │
+│   │   │   ├── user/
+│   │   │   ├── kategori/
+│   │   │   ├── alat/
+│   │   │   ├── peminjaman/
+│   │   │   ├── pengembalian/
+│   │   │   ├── laporan/
+│   │   │   └── logactivity/
+│   │   │
+│   │   ├── petugas/
+│   │   │   ├── dashboard/
+│   │   │   ├── alat/
+│   │   │   ├── peminjaman/
+│   │   │   ├── pengembalian/
+│   │   │   └── laporan/
+│   │   │
+│   │   ├── peminjam/
+│   │   │   ├── dashboard/
+│   │   │   ├── alat/
+│   │   │   ├── peminjaman/
+│   │   │   ├── pengembalian/
+│   │   │   └── profil/
+│   │   │
+│   │   ├── landing/
+│   │   │   ├── home.blade.php
+│   │   │   ├── fitur.blade.php
+│   │   │   ├── tentang.blade.php
+│   │   │   └── kontak.blade.php
+│   │   │
+│   │   └── errors/
+│   │       ├── 403.blade.php
+│   │       ├── 404.blade.php
+│   │       └── 500.blade.php
+│
+├── routes/
+│   └── web.php
+│
+├── storage/
+│
+├── tests/
+│
+├── .env
+├── artisan
+├── composer.json
+└── package.json
