@@ -12,47 +12,105 @@
 
                 {{-- HEADER --}}
                 <div class="card-header text-white text-center"
-                     style="background: linear-gradient(135deg,#0d6efd,#20c997);">
+                    style="background: linear-gradient(135deg,#0d6efd,#20c997);">
 
-                    <h4 class="mb-0">👤 Profil Pengguna</h4>
+                    <h4 class="mb-0">
+                        👤 Profil Pengguna
+                    </h4>
 
                 </div>
 
+                {{-- BODY --}}
                 <div class="card-body text-center">
 
-                    {{-- ICON --}}
-                    <div class="mb-3">
-                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto"
-                             style="width:80px;height:80px;font-size:30px;">
+                    {{-- FOTO / ICON --}}
+                    <div class="mb-4">
 
-                            {{ strtoupper(substr($user->name ?? 'U',0,1)) }}
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto"
+                            style="
+                                width: 90px;
+                                height: 90px;
+                                font-size: 34px;
+                                font-weight: bold;
+                            ">
+
+                            {{ strtoupper(substr($user->nama ?? 'U',0,1)) }}
 
                         </div>
+
                     </div>
+
+                    {{-- NAMA --}}
+                    <h4 class="fw-bold mb-1">
+
+                        {{ $user->nama }}
+
+                    </h4>
+
+                    {{-- ROLE --}}
+                    <span class="badge bg-success px-3 py-2">
+
+                        {{ strtoupper($user->role) }}
+
+                    </span>
+
+                    <hr>
 
                     {{-- DATA --}}
-                    <h5 class="fw-bold mb-1">
-                        {{ $user->name }}
-                    </h5>
+                    <div class="text-start mt-4">
 
-                    <p class="text-muted mb-3">
-                        {{ $user->email }}
-                    </p>
+                        <div class="mb-3">
 
-                    <hr>
+                            <strong>
+                                Nama Lengkap
+                            </strong>
 
-                    <div class="text-start">
+                            <div class="text-muted">
 
-                        <p><strong>Nama :</strong> {{ $user->name }}</p>
-                        <p><strong>Email :</strong> {{ $user->email }}</p>
-                        <p><strong>Role :</strong> Peminjam</p>
+                                {{ $user->nama }}
+
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <strong>
+                                Username
+                            </strong>
+
+                            <div class="text-muted">
+
+                                {{ $user->username }}
+
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <strong>
+                                Role
+                            </strong>
+
+                            <div class="text-muted">
+
+                                {{ $user->role }}
+
+                            </div>
+
+                        </div>
 
                     </div>
 
                     <hr>
 
-                    <a href="/peminjam/dashboard" class="btn btn-primary w-100">
-                        Kembali ke Dashboard
+                    {{-- BUTTON --}}
+                    <a href="/peminjam/dashboard"
+                        class="btn btn-primary w-100 rounded-3">
+
+                        ← Kembali ke Dashboard
+
                     </a>
 
                 </div>

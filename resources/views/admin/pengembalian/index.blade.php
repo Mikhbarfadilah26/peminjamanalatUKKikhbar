@@ -5,322 +5,415 @@
 <style>
 
 .page-header{
-background:linear-gradient(135deg,#dc2626,#b91c1c);
-border-radius:20px;
-padding:28px;
-color:white;
-margin-bottom:24px;
-box-shadow:0 15px 30px rgba(220,38,38,.18);
+    background:linear-gradient(135deg,#dc2626,#b91c1c);
+    border-radius:20px;
+    padding:28px;
+    color:white;
+    margin-bottom:24px;
+    box-shadow:0 15px 30px rgba(220,38,38,.18);
 }
 
 .card-modern{
-border:none;
-border-radius:20px;
-overflow:hidden;
-box-shadow:0 12px 25px rgba(0,0,0,.08);
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 12px 25px rgba(0,0,0,.08);
 }
 
 .table-modern{
-margin-bottom:0;
+    margin-bottom:0;
 }
 
 .table-modern thead{
-background:#0f172a;
-color:white;
+    background:#0f172a;
+    color:white;
 }
 
 .table-modern th{
-border:none;
-padding:18px;
-font-size:14px;
-font-weight:700;
+    border:none;
+    padding:18px;
+    font-size:14px;
+    font-weight:700;
 }
 
 .table-modern td{
-padding:18px;
-vertical-align:middle;
-border-color:#eef2f7;
+    padding:18px;
+    vertical-align:middle;
+    border-color:#eef2f7;
 }
 
 .table-modern tbody tr{
-transition:.25s;
+    transition:.25s;
 }
 
 .table-modern tbody tr:hover{
-background:#f8fafc;
-transform:scale(1.002);
+    background:#f8fafc;
 }
 
 .number-box{
-width:42px;
-height:42px;
-border-radius:12px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#fee2e2;
-color:#dc2626;
-font-weight:700;
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fee2e2;
+    color:#dc2626;
+    font-weight:700;
 }
 
 .user-box{
-display:flex;
-align-items:center;
-gap:12px;
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
 .user-avatar{
-width:42px;
-height:42px;
-border-radius:50%;
-background:linear-gradient(135deg,#dc2626,#fb7185);
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:700;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#dc2626,#fb7185);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
 }
 
 .alat-box{
-background:#f8fafc;
-padding:8px 14px;
-border-radius:12px;
-display:inline-block;
-font-weight:600;
+    background:#f8fafc;
+    padding:8px 14px;
+    border-radius:12px;
+    display:inline-block;
+    font-weight:600;
 }
 
 .status-box{
-padding:10px 16px;
-border-radius:30px;
-font-size:12px;
-font-weight:700;
+    padding:10px 16px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:700;
 }
 
 .date-box{
-font-size:13px;
-color:#64748b;
-font-weight:600;
+    font-size:13px;
+    color:#64748b;
+    font-weight:600;
 }
 
 .empty-box{
-padding:60px;
-text-align:center;
-color:#64748b;
+    padding:60px;
+    text-align:center;
+    color:#64748b;
 }
 
 .empty-box i{
-font-size:60px;
-opacity:.3;
-margin-bottom:15px;
+    font-size:60px;
+    opacity:.3;
+    margin-bottom:15px;
 }
 
 </style>
 
-
-
 <div class="container-fluid">
 
-{{-- HEADER --}}
-<div class="page-header">
+    {{-- HEADER --}}
+    <div class="page-header">
 
-<div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-center">
 
-<div>
+            <div>
 
-<h2 class="mb-2">
+                <h2 class="mb-2">
 
-<i class="fas fa-undo mr-2"></i>
+                    <i class="fas fa-clipboard-check mr-2"></i>
 
-Data Pengembalian
+                    Monitoring Pengembalian
 
-</h2>
+                </h2>
 
-<p class="mb-0">
+                <p class="mb-0">
 
-Monitoring seluruh aktivitas pengembalian alat
+                    Kelola dan verifikasi pengembalian alat
 
-</p>
+                </p>
 
-</div>
+            </div>
 
+            <div>
 
-<div>
+                <h5>
 
-<h5>
+                    {{ now()->format('d F Y') }}
 
-{{ now()->format('d F Y') }}
+                </h5>
 
-</h5>
+            </div>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
-</div>
+    {{-- ALERT --}}
+    @if(session('success'))
 
+        <div class="alert alert-success">
 
+            {{ session('success') }}
 
-<div class="card card-modern">
+        </div>
 
-<div class="card-body p-0">
+    @endif
 
-<div class="table-responsive">
+    <div class="card card-modern">
 
-<table class="table table-modern">
+        <div class="card-body p-0">
 
-<thead>
+            <div class="table-responsive">
 
-<tr>
+                <table class="table table-modern">
 
-<th>No</th>
+                    <thead>
 
-<th>Nama Peminjam</th>
+                        <tr>
 
-<th>Nama Alat</th>
+                            <th>No</th>
+                            <th>Peminjam</th>
+                            <th>Alat</th>
+                            <th>Tanggal Pinjam</th>
+                            <th>Batas Kembali</th>
+                            <th>Status</th>
+                            <th>Tanggal Pengembalian</th>
+                            <th width="180">Aksi</th>
 
-<th>Status</th>
+                        </tr>
 
-<th>Tanggal</th>
+                    </thead>
 
-</tr>
+                    <tbody>
 
-</thead>
+                        @forelse($data as $item)
 
+                        <tr>
 
+                            <td>
 
-<tbody>
+                                <div class="number-box">
 
-@forelse($data as $item)
+                                    {{ $loop->iteration }}
 
-<tr>
+                                </div>
 
-<td>
+                            </td>
 
-<div class="number-box">
+                            <td>
 
-{{ $loop->iteration }}
+                                <div class="user-box">
 
-</div>
+                                    <div class="user-avatar">
 
-</td>
+                                        {{ strtoupper(substr($item->user->nama ?? 'U',0,1)) }}
 
+                                    </div>
 
+                                    <div>
 
-<td>
+                                        <b>
 
-<div class="user-box">
+                                            {{ $item->user->nama ?? '-' }}
 
-<div class="user-avatar">
+                                        </b>
 
-{{ strtoupper(substr($item->user->nama ?? 'U',0,1)) }}
+                                    </div>
 
-</div>
+                                </div>
 
-<div>
+                            </td>
 
-<b>
+                            <td>
 
-{{ $item->user->nama ?? '-' }}
+                                <div class="alat-box">
 
-</b>
+                                    <i class="fas fa-tools mr-2 text-danger"></i>
 
-</div>
+                                    {{ $item->alat->nama_alat ?? '-' }}
 
-</div>
+                                </div>
 
-</td>
+                            </td>
 
+                            <td>
 
+                                <div class="date-box">
 
-<td>
+                                    <i class="fas fa-calendar-plus mr-1"></i>
 
-<div class="alat-box">
+                                    {{ $item->tanggal_pinjam }}
 
-<i class="fas fa-tools mr-2 text-danger"></i>
+                                </div>
 
-{{ $item->alat->nama_alat ?? '-' }}
+                            </td>
 
-</div>
+                            <td>
 
-</td>
+                                <div class="date-box">
 
+                                    <i class="fas fa-clock mr-1"></i>
 
+                                    {{ $item->tanggal_kembali }}
 
-<td>
+                                </div>
 
-<span
-class="badge badge-success status-box">
+                            </td>
 
-{{ strtoupper($item->status) }}
+                            <td>
 
-</span>
+                                @if($item->status=='approved')
 
-</td>
+                                    <span class="badge badge-primary status-box">
 
+                                        SEDANG DIPINJAM
 
+                                    </span>
 
-<td>
+                                @elseif($item->status=='menunggu_verifikasi')
 
-<div class="date-box">
+                                    <span class="badge badge-warning status-box">
 
-<i class="far fa-calendar-alt mr-1"></i>
+                                        MENUNGGU VERIFIKASI
 
-{{ $item->created_at->format('d M Y') }}
+                                    </span>
 
-<br>
+                                @elseif($item->status=='selesai')
 
-<small>
+                                    <span class="badge badge-success status-box">
 
-{{ $item->created_at->format('H:i') }}
+                                        SELESAI
 
-</small>
+                                    </span>
 
-</div>
+                                @else
 
-</td>
+                                    <span class="badge badge-secondary status-box">
 
-</tr>
+                                        {{ strtoupper($item->status) }}
 
-@empty
+                                    </span>
 
-<tr>
+                                @endif
 
-<td colspan="5">
+                            </td>
 
-<div class="empty-box">
+                            <td>
 
-<i class="fas fa-box-open"></i>
+                                <div class="date-box">
 
-<h5>
+                                    <i class="far fa-calendar-check mr-1"></i>
 
-Belum Ada Data Pengembalian
+                                    {{ $item->created_at->format('d M Y') }}
 
-</h5>
+                                    <br>
 
-<p>
+                                    <small>
 
-Data pengembalian akan muncul di sini
+                                        {{ $item->created_at->format('H:i') }}
 
-</p>
+                                    </small>
 
-</div>
+                                </div>
 
-</td>
+                            </td>
 
-</tr>
+                            <td>
 
-@endforelse
+                                @if($item->status=='approved')
 
+                                    <button
+                                        class="btn btn-secondary btn-sm"
+                                        disabled>
 
-</tbody>
+                                        Menunggu
 
-</table>
+                                    </button>
 
-</div>
+                                @elseif($item->status=='menunggu_verifikasi')
 
-</div>
+                                    <form
+                                        action="{{ route('admin.pengembalian.verifikasi',$item->id) }}"
+                                        method="POST">
 
-</div>
+                                        @csrf
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-success btn-sm"
+                                            onclick="return confirm('Verifikasi pengembalian alat ini?')">
+
+                                            <i class="fas fa-check"></i>
+
+                                            Verifikasi
+
+                                        </button>
+
+                                    </form>
+
+                                @elseif($item->status=='selesai')
+
+                                    <button
+                                        class="btn btn-success btn-sm"
+                                        disabled>
+
+                                        <i class="fas fa-check-circle"></i>
+
+                                        Selesai
+
+                                    </button>
+
+                                @endif
+
+                            </td>
+
+                        </tr>
+
+                        @empty
+
+                        <tr>
+
+                            <td colspan="8">
+
+                                <div class="empty-box">
+
+                                    <i class="fas fa-box-open"></i>
+
+                                    <h5>
+
+                                        Belum Ada Data Pengembalian
+
+                                    </h5>
+
+                                    <p>
+
+                                        Data pengembalian akan muncul di sini
+
+                                    </p>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        @endforelse
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 

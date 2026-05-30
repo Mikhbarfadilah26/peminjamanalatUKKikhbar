@@ -4,425 +4,408 @@
 
 <style>
 
-.page-header{
-background:linear-gradient(135deg,#2563eb,#1e3a8a);
-border-radius:18px;
-padding:28px;
-color:white;
-margin-bottom:25px;
-box-shadow:0 12px 25px rgba(37,99,235,.18);
+.stat-box{
+    border-radius:15px;
+    color:white;
+    padding:20px;
+    margin-bottom:20px;
 }
 
-.card-modern{
-border:none;
-border-radius:18px;
-overflow:hidden;
-box-shadow:0 10px 25px rgba(0,0,0,.08);
+.stat-blue{
+    background:linear-gradient(135deg,#3b82f6,#1d4ed8);
+}
+
+.stat-green{
+    background:linear-gradient(135deg,#10b981,#059669);
+}
+
+.stat-orange{
+    background:linear-gradient(135deg,#f59e0b,#d97706);
+}
+
+.stat-red{
+    background:linear-gradient(135deg,#ef4444,#dc2626);
+}
+
+.stat-box h3{
+    margin:0;
+    font-weight:bold;
+}
+
+.stat-box p{
+    margin:0;
+    opacity:.9;
+}
+
+.card-custom{
+    border:none;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.card-header-custom{
+    background:#343a40;
+    color:white;
+    padding:15px 20px;
 }
 
 .filter-box{
-background:#f8fafc;
-border-radius:14px;
-padding:20px;
+    background:#f8f9fa;
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:20px;
 }
 
-.form-control{
-border-radius:12px;
-height:46px;
+.table thead{
+    background:#343a40;
+    color:white;
 }
 
-.btn-modern{
-border-radius:12px;
-padding:10px 18px;
-font-weight:600;
+.table td,
+.table th{
+    vertical-align:middle;
 }
 
-.table-modern{
-margin-bottom:0;
+.badge{
+    padding:8px 12px;
+    font-size:12px;
 }
 
-.table-modern thead{
-background:#0f172a;
-color:white;
-}
-
-.table-modern th{
-border:none;
-}
-
-.table-modern td{
-vertical-align:middle;
-}
-
-.table-modern tbody tr{
-transition:.25s;
-}
-
-.table-modern tbody tr:hover{
-background:#f8fafc;
-}
-
-.badge-status{
-padding:8px 12px;
-border-radius:30px;
-font-size:12px;
-}
-
-.section-title{
-font-weight:700;
-color:#1e293b;
-margin-bottom:15px;
-}
-
-.empty-state{
-padding:30px;
-text-align:center;
-color:#64748b;
+.page-title{
+    font-weight:bold;
 }
 
 </style>
 
-
 <div class="container-fluid">
 
-{{-- HEADER --}}
-<div class="page-header">
+    {{-- HEADER --}}
+    <div class="mb-4">
 
-<div class="d-flex justify-content-between align-items-center">
+        <h3 class="page-title">
 
-<div>
+            <i class="fas fa-chart-bar text-primary"></i>
 
-<h2>
+            Laporan Transaksi Alat
 
-<i class="fas fa-chart-line mr-2"></i>
+        </h3>
 
-Laporan Peminjaman & Pengembalian
+        <small class="text-muted">
+            Monitoring data peminjaman dan pengembalian alat
+        </small>
 
-</h2>
+    </div>
 
-<p class="mb-0">
+    {{-- STATISTIK --}}
+    <div class="row">
 
-Monitoring transaksi alat UKK
+        <div class="col-md-3">
 
-</p>
+            <div class="stat-box stat-blue">
 
-</div>
+                <h3>{{ $data->count() }}</h3>
 
-<div>
+                <p>Total Transaksi</p>
 
-<h5>
+            </div>
 
-{{ now()->format('d F Y') }}
+        </div>
 
-</h5>
+        <div class="col-md-3">
 
-</div>
+            <div class="stat-box stat-orange">
 
-</div>
+                <h3>
+                    {{ $data->where('status','pending')->count() }}
+                </h3>
 
-</div>
+                <p>Pending</p>
 
+            </div>
 
+        </div>
 
-<div class="card card-modern">
+        <div class="col-md-3">
 
-<div class="card-body">
+            <div class="stat-box stat-green">
 
+                <h3>
+                    {{ $data->where('status','approved')->count() }}
+                </h3>
 
-{{-- FILTER --}}
-<div class="filter-box mb-4">
+                <p>Sedang Dipinjam</p>
 
-<form method="GET">
+            </div>
 
-<div class="row">
+        </div>
 
-<div class="col-md-4">
+        <div class="col-md-3">
 
-<label>Dari Tanggal</label>
+            <div class="stat-box stat-red">
 
-<input
-type="date"
-name="mulai"
-value="{{ request('mulai') }}"
-class="form-control">
+                <h3>
+                    {{ $data->where('status','selesai')->count() }}
+                </h3>
 
-</div>
+                <p>Selesai</p>
 
+            </div>
 
-<div class="col-md-4">
+        </div>
 
-<label>Sampai Tanggal</label>
+    </div>
 
-<input
-type="date"
-name="sampai"
-value="{{ request('sampai') }}"
-class="form-control">
+    {{-- CARD --}}
+    <div class="card card-custom">
 
-</div>
+        <div class="card-header card-header-custom">
 
+            <h5 class="mb-0">
 
-<div class="col-md-4 d-flex align-items-end">
+                <i class="fas fa-file-alt mr-2"></i>
 
-<button class="btn btn-primary btn-modern mr-2">
+                Data Laporan
 
-<i class="fas fa-search mr-1"></i>
+            </h5>
 
-Filter
+        </div>
 
-</button>
+        <div class="card-body">
 
+            {{-- FILTER --}}
+            <div class="filter-box">
 
-<a
-href="/admin/laporan"
-class="btn btn-secondary btn-modern mr-2">
+                <form method="GET">
 
-Reset
+                    <div class="row">
 
-</a>
+                        <div class="col-md-3">
 
+                            <label>Tanggal Mulai</label>
 
-<a
-href="/admin/laporan/cetak?mulai={{ $mulai }}&sampai={{ $sampai }}"
-target="_blank"
-class="btn btn-success btn-modern">
+                            <input
+                                type="date"
+                                name="mulai"
+                                value="{{ $mulai }}"
+                                class="form-control">
 
-<i class="fas fa-print mr-1"></i>
+                        </div>
 
-Cetak
+                        <div class="col-md-3">
 
-</a>
+                            <label>Tanggal Sampai</label>
 
-</div>
+                            <input
+                                type="date"
+                                name="sampai"
+                                value="{{ $sampai }}"
+                                class="form-control">
 
-</div>
+                        </div>
 
-</form>
+                        <div class="col-md-3">
 
-</div>
+                            <label>Status</label>
 
+                            <select
+                                name="status"
+                                class="form-control">
 
+                                <option value="semua"
+                                    {{ $status=='semua' ? 'selected' : '' }}>
+                                    Semua
+                                </option>
 
-{{-- PEMINJAMAN --}}
-<div class="mb-5">
+                                <option value="pending"
+                                    {{ $status=='pending' ? 'selected' : '' }}>
+                                    Pending
+                                </option>
 
-<h4 class="section-title">
+                                <option value="approved"
+                                    {{ $status=='approved' ? 'selected' : '' }}>
+                                    Sedang Dipinjam
+                                </option>
 
-<i class="fas fa-handshake text-warning mr-2"></i>
+                                <option value="menunggu_verifikasi"
+                                    {{ $status=='menunggu_verifikasi' ? 'selected' : '' }}>
+                                    Menunggu Verifikasi
+                                </option>
 
-Data Peminjaman
+                                <option value="selesai"
+                                    {{ $status=='selesai' ? 'selected' : '' }}>
+                                    Selesai
+                                </option>
 
-</h4>
+                            </select>
 
+                        </div>
 
-<div class="table-responsive">
+                        <div class="col-md-3 d-flex align-items-end">
 
-<table class="table table-modern">
+                            <button
+                                class="btn btn-primary mr-2">
 
-<thead>
+                                <i class="fas fa-search mr-1"></i>
 
-<tr>
+                                Filter
 
-<th>User</th>
+                            </button>
 
-<th>Alat</th>
+                            <a
+                                href="{{ route('admin.laporan.cetak',[
+                                    'mulai'=>$mulai,
+                                    'sampai'=>$sampai,
+                                    'status'=>$status
+                                ]) }}"
+                                target="_blank"
+                                class="btn btn-success">
 
-<th>Tanggal</th>
+                                <i class="fas fa-print mr-1"></i>
 
-<th>Status</th>
+                                Cetak
 
-</tr>
+                            </a>
 
-</thead>
+                        </div>
 
+                    </div>
 
-<tbody>
+                </form>
 
-@forelse($peminjaman as $p)
+            </div>
 
-<tr>
+            {{-- TABEL --}}
+            <div class="table-responsive">
 
-<td>
+                <table class="table table-bordered table-hover">
 
-{{ $p->user->nama ?? '-' }}
+                    <thead>
 
-</td>
+                        <tr>
 
+                            <th width="60">No</th>
+                            <th>Peminjam</th>
+                            <th>Alat</th>
+                            <th width="100">Jumlah</th>
+                            <th width="180">Tanggal</th>
+                            <th width="180">Status</th>
 
-<td>
+                        </tr>
 
-{{ $p->alat->nama_alat ?? '-' }}
+                    </thead>
 
-</td>
+                    <tbody>
 
+                        @forelse($data as $item)
 
-<td>
+                        <tr>
 
-{{ $p->created_at->format('d M Y H:i') }}
+                            <td>
 
-</td>
+                                {{ $loop->iteration }}
 
+                            </td>
 
-<td>
+                            <td>
 
-<span class="badge badge-status
-{{ $p->status=='approved'
-? 'badge-success'
-: ($p->status=='pending'
-? 'badge-warning'
-: 'badge-danger') }}">
+                                <strong>
+                                    {{ $item->user->nama ?? '-' }}
+                                </strong>
 
-{{ strtoupper($p->status) }}
+                            </td>
 
-</span>
+                            <td>
 
-</td>
+                                {{ $item->alat->nama_alat ?? '-' }}
 
-</tr>
+                            </td>
 
-@empty
+                            <td>
 
-<tr>
+                                {{ $item->jumlah }}
 
-<td colspan="4">
+                            </td>
 
-<div class="empty-state">
+                            <td>
 
-Belum ada data peminjaman
+                                {{ $item->created_at->format('d-m-Y H:i') }}
 
-</div>
+                            </td>
 
-</td>
+                            <td>
 
-</tr>
+                                @if($item->status=='pending')
 
-@endforelse
+                                    <span class="badge badge-warning">
 
-</tbody>
+                                        PENDING
 
-</table>
+                                    </span>
 
-</div>
+                                @elseif($item->status=='approved')
 
-</div>
+                                    <span class="badge badge-primary">
 
+                                        DIPINJAM
 
+                                    </span>
 
+                                @elseif($item->status=='menunggu_verifikasi')
 
-{{-- PENGEMBALIAN --}}
-<div>
+                                    <span class="badge badge-info">
 
-<h4 class="section-title">
+                                        MENUNGGU VERIFIKASI
 
-<i class="fas fa-undo text-danger mr-2"></i>
+                                    </span>
 
-Data Pengembalian
+                                @elseif($item->status=='selesai')
 
-</h4>
+                                    <span class="badge badge-success">
 
+                                        SELESAI
 
-<div class="table-responsive">
+                                    </span>
 
-<table class="table table-modern">
+                                @else
 
-<thead>
+                                    <span class="badge badge-secondary">
 
-<tr>
+                                        {{ strtoupper($item->status) }}
 
-<th>User</th>
+                                    </span>
 
-<th>Alat</th>
+                                @endif
 
-<th>Tanggal Kembali</th>
+                            </td>
 
-<th>Denda</th>
+                        </tr>
 
-</tr>
+                        @empty
 
-</thead>
+                        <tr>
 
+                            <td colspan="6" class="text-center">
 
-<tbody>
+                                <i class="fas fa-folder-open mr-2"></i>
 
-@forelse($pengembalian as $k)
+                                Tidak ada data laporan
 
-<tr>
+                            </td>
 
-<td>
+                        </tr>
 
-{{ $k->peminjaman->user->nama ?? '-' }}
+                        @endforelse
 
-</td>
+                    </tbody>
 
+                </table>
 
-<td>
+            </div>
 
-{{ $k->peminjaman->alat->nama_alat ?? '-' }}
+        </div>
 
-</td>
-
-
-<td>
-
-{{ \Carbon\Carbon::parse($k->tanggal_pengembalian)->format('d M Y') }}
-
-</td>
-
-
-<td>
-
-@if($k->denda>0)
-
-<span class="badge badge-danger">
-
-Rp {{ number_format($k->denda) }}
-
-</span>
-
-@else
-
-<span class="badge badge-success">
-
-Tidak Ada
-
-</span>
-
-@endif
-
-</td>
-
-</tr>
-
-@empty
-
-<tr>
-
-<td colspan="4">
-
-<div class="empty-state">
-
-Belum ada data pengembalian
-
-</div>
-
-</td>
-
-</tr>
-
-@endforelse
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-</div>
-
-</div>
+    </div>
 
 </div>
 

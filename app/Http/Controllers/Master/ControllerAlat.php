@@ -11,15 +11,27 @@ use App\Models\ModelKategori;
 class ControllerAlat extends Controller
 {
     // =========================
-    // INDEX (ADMIN)
+    // INDEX ADMIN
     // =========================
-    public function index()
+    public function index(Request $request)
     {
-        $data = ModelAlat::with('kategori')
-            ->latest()
-            ->get();
+        $kategori = ModelKategori::all();
 
-        return view('admin.alat.index', compact('data'));
+        $query = ModelAlat::with('kategori');
+
+        // FILTER KATEGORI
+        if ($request->filled('kategori_id')) {
+            $query->where('kategori_id', $request->kategori_id);
+        }
+
+        // FILTER KONDISI
+        if ($request->filled('kondisi')) {
+            $query->where('kondisi', $request->kondisi);
+        }
+
+        $data = $query->latest()->paginate(10);
+
+        return view('admin.alat.index', compact('data', 'kategori'));
     }
 
     // =========================
@@ -43,18 +55,14 @@ class ControllerAlat extends Controller
             'stok'        => 'required|numeric',
             'kondisi'     => 'required',
             'status'      => 'required',
+            'foto'        => 'nullable|image|max:2048',
         ]);
 
         $foto = null;
 
         if ($request->hasFile('foto')) {
-
             $foto = time() . '.' . $request->foto->extension();
-
-            $request->foto->move(
-                public_path('foto/alat'),
-                $foto
-            );
+            $request->foto->move(public_path('foto/alat'), $foto);
         }
 
         ModelAlat::create([
@@ -75,8 +83,7 @@ class ControllerAlat extends Controller
     // =========================
     public function show($id)
     {
-        $data = ModelAlat::with('kategori')
-            ->findOrFail($id);
+        $data = ModelAlat::with('kategori')->findOrFail($id);
 
         return view('admin.alat.show', compact('data'));
     }
@@ -105,22 +112,19 @@ class ControllerAlat extends Controller
             'stok'        => 'required|numeric',
             'kondisi'     => 'required',
             'status'      => 'required',
+            'foto'        => 'nullable|image|max:2048',
         ]);
 
         $foto = $data->foto;
 
         if ($request->hasFile('foto')) {
 
-            if ($data->foto && file_exists(public_path('foto/alat/' . $data->foto))) {
-                unlink(public_path('foto/alat/' . $data->foto));
+            if ($foto && file_exists(public_path('foto/alat/' . $foto))) {
+                unlink(public_path('foto/alat/' . $foto));
             }
 
             $foto = time() . '.' . $request->foto->extension();
-
-            $request->foto->move(
-                public_path('foto/alat'),
-                $foto
-            );
+            $request->foto->move(public_path('foto/alat'), $foto);
         }
 
         $data->update([
@@ -154,7 +158,7 @@ class ControllerAlat extends Controller
     }
 
     // =========================
-    // PETUGAS VIEW (CARD + STOK)
+    // PETUGAS INDEX (FILTER KATEGORI + KONDISI)
     // =========================
     public function petugasIndex(Request $request)
     {
@@ -162,11 +166,17 @@ class ControllerAlat extends Controller
 
         $query = ModelAlat::with('kategori');
 
-        if ($request->kategori_id) {
+        // FILTER KATEGORI
+        if ($request->filled('kategori_id')) {
             $query->where('kategori_id', $request->kategori_id);
         }
 
-        $data = $query->latest()->get();
+        // FILTER KONDISI
+        if ($request->filled('kondisi')) {
+            $query->where('kondisi', $request->kondisi);
+        }
+
+        $data = $query->latest()->paginate(12);
 
         return view('petugas.alat.index', compact('data', 'kategori'));
     }

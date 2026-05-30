@@ -2,237 +2,257 @@
 
 @section('content')
 
+<style>
+
+    .aksi-group{
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: nowrap;
+    }
+
+    .aksi-group form{
+        margin: 0;
+    }
+
+    .aksi-btn{
+        min-width: 75px;
+        white-space: nowrap;
+    }
+
+</style>
+
 <div class="container-fluid">
 
-<div class="bg-warning text-dark p-4 rounded shadow mb-4">
+    {{-- HEADER --}}
+    <div class="bg-warning text-dark p-4 rounded shadow mb-4">
 
-<h4 class="mb-1">
+        <h4 class="mb-1">
+            🟡 Approval Peminjaman
+        </h4>
 
-🟡 Approval Peminjaman
+        <small>
+            Data peminjaman yang menunggu persetujuan
+        </small>
 
-</h4>
+    </div>
 
-<small>
 
-Data peminjaman yang menunggu persetujuan
+    {{-- ALERT --}}
+    @if(session('success'))
 
-</small>
+        <div class="alert alert-success">
 
-</div>
+            {{ session('success') }}
 
+        </div>
 
-<div class="card shadow border-0">
+    @endif
 
-<div class="card-body">
 
-<div class="table-responsive">
+    @if(session('error'))
 
-<table class="table table-hover">
+        <div class="alert alert-danger">
 
-<thead class="thead-dark">
+            {{ session('error') }}
 
-<tr>
+        </div>
 
-<th>No</th>
+    @endif
 
-<th>Peminjam</th>
 
-<th>Alat</th>
 
-<th>Jumlah</th>
+    <div class="card shadow border-0">
 
-<th>Tanggal</th>
+        <div class="card-body">
 
-<th>Status</th>
+            <div class="table-responsive">
 
-<th>Aksi</th>
+                <table class="table table-hover align-middle">
 
-</tr>
+                    <thead class="thead-dark">
 
-</thead>
+                        <tr>
 
+                            <th>No</th>
 
-<tbody>
+                            <th>Peminjam</th>
 
-@forelse($data as $item)
+                            <th>Alat</th>
 
-<tr>
+                            <th>Jumlah</th>
 
-<td>
+                            <th>Tanggal</th>
 
-{{ $loop->iteration }}
+                            <th>Status</th>
 
-</td>
+                            <th width="420">
+                                Aksi
+                            </th>
 
+                        </tr>
 
-<td>
+                    </thead>
 
-{{ $item->user->nama }}
 
-</td>
+                    <tbody>
 
+                        @forelse($data as $item)
 
-<td>
+                        <tr>
 
-{{ $item->alat->nama_alat }}
+                            <td>
+                                {{ $loop->iteration }}
+                            </td>
 
-</td>
 
+                            <td>
+                                {{ $item->user->nama }}
+                            </td>
 
-<td>
 
-{{ $item->jumlah }}
+                            <td>
+                                {{ $item->alat->nama_alat }}
+                            </td>
 
-</td>
 
+                            <td>
+                                {{ $item->jumlah }}
+                            </td>
 
-<td>
 
-{{ $item->tanggal_pinjam }}
+                            <td>
+                                {{ $item->tanggal_pinjam }}
+                            </td>
 
-</td>
 
+                            <td>
 
-<td>
+                                @if($item->status=='pending')
 
-@if($item->status=='pending')
+                                    <span class="badge badge-warning">
+                                        PENDING
+                                    </span>
 
-<span class="badge badge-warning">
+                                @elseif($item->status=='approved')
 
-PENDING
+                                    <span class="badge badge-success">
+                                        APPROVED
+                                    </span>
 
-</span>
+                                @elseif($item->status=='rejected')
 
-@elseif($item->status=='approved')
+                                    <span class="badge badge-danger">
+                                        REJECTED
+                                    </span>
 
-<span class="badge badge-success">
+                                @else
 
-APPROVED
+                                    <span class="badge badge-secondary">
+                                        {{ strtoupper($item->status) }}
+                                    </span>
 
-</span>
+                                @endif
 
-@elseif($item->status=='rejected')
+                            </td>
 
-<span class="badge badge-danger">
 
-REJECTED
+                            <td>
 
-</span>
+                                <div class="aksi-group">
 
-@else
+                                    {{-- APPROVE --}}
+                                    @if($item->status=='pending')
 
-<span class="badge badge-secondary">
+                                    <form
+                                        action="{{ route('petugas.peminjaman.approve',$item->id) }}"
+                                        method="POST">
 
-{{ strtoupper($item->status) }}
+                                        @csrf
 
-</span>
+                                        <button
+                                            class="btn btn-success btn-sm aksi-btn">
 
-@endif
+                                            ✔ Approve
 
-</td>
+                                        </button>
 
+                                    </form>
 
-<td>
 
-@if($item->status=='pending')
 
-<div class="d-flex">
+                                    {{-- REJECT --}}
+                                    <form
+                                        action="{{ route('petugas.peminjaman.reject',$item->id) }}"
+                                        method="POST">
 
-<form
-action="{{ route('petugas.peminjaman.approve',$item->id) }}"
-method="POST"
-class="mr-2">
+                                        @csrf
 
-@csrf
+                                        <button
+                                            class="btn btn-danger btn-sm aksi-btn">
 
-<button
-class="btn btn-success btn-sm">
+                                            ✖ Reject
 
-✔ Approve
+                                        </button>
 
-</button>
+                                    </form>
 
-</form>
+                                    @endif
 
 
 
-<form
-action="{{ route('petugas.peminjaman.reject',$item->id) }}"
-method="POST">
 
-@csrf
+                                    {{-- DELETE --}}
+                                    <form
+                                        action="{{ route('petugas.peminjaman.destroy',$item->id) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Yakin hapus data ini?')">
 
-<button
-class="btn btn-danger btn-sm">
+                                        @csrf
+                                        @method('DELETE')
 
-✖ Reject
+                                        <button
+                                            class="btn btn-dark btn-sm aksi-btn">
 
-</button>
+                                            🗑 Hapus
 
-</form>
+                                        </button>
 
-</div>
+                                    </form>
 
+                                </div>
 
-@elseif($item->status=='approved')
+                            </td>
 
-<button
-class="btn btn-success btn-sm"
-disabled>
+                        </tr>
 
-✔ Sudah Approve
 
-</button>
+                        @empty
 
+                        <tr>
 
-@elseif($item->status=='rejected')
+                            <td
+                                colspan="7"
+                                class="text-center">
 
-<button
-class="btn btn-danger btn-sm"
-disabled>
+                                Tidak ada data
 
-✖ Ditolak
+                            </td>
 
-</button>
+                        </tr>
 
+                        @endforelse
 
-@else
 
-—
+                    </tbody>
 
-@endif
+                </table>
 
-</td>
+            </div>
 
-</tr>
+        </div>
 
-
-@empty
-
-<tr>
-
-<td
-colspan="7"
-class="text-center">
-
-Tidak ada data
-
-</td>
-
-</tr>
-
-@endforelse
-
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</div>
+    </div>
 
 </div>
 

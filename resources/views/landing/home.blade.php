@@ -160,7 +160,7 @@
             background-position: center;
             background-repeat: no-repeat;
 
-           animation: slideBg 18s infinite;
+            animation: slideBg 18s infinite;
 
             z-index: 1;
         }
@@ -208,7 +208,7 @@
 
                         <h1 class="fw-bold display-3">
 
-                            Sistem Peminjaman Alat
+                            Sistem Peminjaman Alat 
 
                         </h1>
 
@@ -304,12 +304,6 @@
 
                             </p>
 
-                            <span class="badge bg-primary px-3 py-2">
-
-                                Stok :
-                                {{ $item->stok }}
-
-                            </span>
 
                         </div>
 

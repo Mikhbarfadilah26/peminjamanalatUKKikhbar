@@ -23,31 +23,30 @@ class ControllerPeminjamanPeminjam extends Controller
     {
 
         $search =
-        $request->search;
+            $request->search;
 
         $data =
-        ModelAlat::with(
-            'kategori'
-        )
+            ModelAlat::with(
+                'kategori'
+            )
 
-        ->when(
-            $search,
-            function($query)
-            use($search){
+            ->when(
+                $search,
+                function ($query)
+                use ($search) {
 
-                $query
-                ->where(
-                    'nama_alat',
-                    'like',
-                    "%{$search}%"
-                );
+                    $query
+                        ->where(
+                            'nama_alat',
+                            'like',
+                            "%{$search}%"
+                        );
+                }
+            )
 
-            }
-        )
+            ->latest()
 
-        ->latest()
-
-        ->get();
+            ->get();
 
         return view(
             'peminjam.alat.index',
@@ -55,37 +54,94 @@ class ControllerPeminjamanPeminjam extends Controller
                 'data'
             )
         );
-
     }
 
 
 
     /*
     |--------------------------------------------------------------------------
-    | PINJAM ALAT
+    | FORM PINJAM
     |--------------------------------------------------------------------------
     */
 
-    public function pinjam($id)
+    public function formPinjam($id)
     {
 
         $alat =
-        ModelAlat::findOrFail(
-            $id
+            ModelAlat::with(
+                'kategori'
+            )
+
+            ->findOrFail(
+                $id
+            );
+
+        return view(
+            'peminjam.pinjam.form',
+            compact(
+                'alat'
+            )
         );
+    }
 
 
-        if($alat->stok <= 0){
+
+    /*
+    |--------------------------------------------------------------------------
+    | SIMPAN PEMINJAMAN
+    |--------------------------------------------------------------------------
+    */
+
+    public function storePinjam(Request $request, $id)
+    {
+
+        $alat =
+            ModelAlat::findOrFail(
+                $id
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | VALIDASI
+        |--------------------------------------------------------------------------
+        */
+
+        $request->validate([
+
+            'jumlah'
+            =>
+            'required|integer|min:1|max:' . $alat->stok,
+
+            'lama_hari'
+            =>
+            'required|integer|min:1|max:3'
+
+        ]);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | CEK STOK
+        |--------------------------------------------------------------------------
+        */
+
+        if ($alat->stok <= 0) {
 
             return back()
 
-            ->with(
-                'error',
-                'Stok alat habis'
-            );
-
+                ->with(
+                    'error',
+                    'Stok alat habis'
+                );
         }
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | SIMPAN PEMINJAMAN
+        |--------------------------------------------------------------------------
+        */
 
         ModelPeminjaman::create([
 
@@ -103,11 +159,13 @@ class ControllerPeminjamanPeminjam extends Controller
 
             'tanggal_kembali'
             =>
-            now()->addDays(3),
+            now()->addDays(
+                (int) $request->lama_hari
+            ),
 
             'jumlah'
             =>
-            1,
+            (int) $request->jumlah,
 
             'status'
             =>
@@ -116,18 +174,37 @@ class ControllerPeminjamanPeminjam extends Controller
         ]);
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | KURANGI STOK
+        |--------------------------------------------------------------------------
+        */
+
         $alat->decrement(
-            'stok'
+
+            'stok',
+
+            (int) $request->jumlah
+
         );
 
 
-        return back()
+        /*
+        |--------------------------------------------------------------------------
+        | REDIRECT
+        |--------------------------------------------------------------------------
+        */
 
-        ->with(
-            'success',
-            'Peminjaman berhasil diajukan'
-        );
+        return redirect()
 
+            ->route(
+                'peminjam.status'
+            )
+
+            ->with(
+                'success',
+                'Peminjaman anda  berhasil diajukan silahkan tunggu konfirmasi petugas'
+            );
     }
 
 
@@ -143,23 +220,23 @@ class ControllerPeminjamanPeminjam extends Controller
 
         $data =
 
-        ModelPeminjaman::with([
+            ModelPeminjaman::with([
 
-            'alat'
+                'alat'
 
-        ])
+            ])
 
-        ->where(
+            ->where(
 
-            'user_id',
+                'user_id',
 
-            Auth::id()
+                Auth::id()
 
-        )
+            )
 
-        ->latest()
+            ->latest()
 
-        ->get();
+            ->get();
 
 
         return view(
@@ -173,7 +250,5 @@ class ControllerPeminjamanPeminjam extends Controller
             )
 
         );
-
     }
-
 }

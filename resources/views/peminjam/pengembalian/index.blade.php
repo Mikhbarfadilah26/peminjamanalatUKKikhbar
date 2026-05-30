@@ -2,60 +2,175 @@
 
 @section('content')
 
-<div class="container py-4">
+<style>
 
-    <div class="card shadow border-0">
+    body{
+        background: #f4f6f9;
+    }
 
-        {{-- HEADER --}}
-        <div class="card-header bg-primary text-white">
+    .card-box{
+        border: none;
+        border-radius: 16px;
+    }
 
-            <h4 class="mb-0 fw-bold">
+    .stat-card{
+        border-radius: 16px;
+        color: white;
+    }
 
-                <i class="fas fa-undo-alt me-2"></i>
+    .table-card{
+        border-radius: 16px;
+        border: none;
+    }
 
+    .badge-status{
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+    }
+
+</style>
+
+<div class="container-fluid">
+
+    {{-- HEADER --}}
+    <div class="card card-box bg-primary text-white mb-4">
+
+        <div class="card-body">
+
+            <h3 class="mb-1">
                 Pengembalian Alat
+            </h3>
 
-            </h4>
+            <small>
+                Kelola pengembalian alat
+            </small>
 
         </div>
 
-        {{-- BODY --}}
+    </div>
+
+
+    {{-- STATISTIK --}}
+    <div class="row">
+
+        <div class="col-md-3 mb-3">
+
+            <div class="card stat-card bg-primary shadow-sm">
+
+                <div class="card-body">
+
+                    <h6>Total</h6>
+
+                    <h2>{{ $peminjaman }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3 mb-3">
+
+            <div class="card stat-card bg-warning shadow-sm">
+
+                <div class="card-body">
+
+                    <h6>Pending</h6>
+
+                    <h2>{{ $pending }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3 mb-3">
+
+            <div class="card stat-card bg-success shadow-sm">
+
+                <div class="card-body">
+
+                    <h6>Dipinjam</h6>
+
+                    <h2>{{ $approved }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3 mb-3">
+
+            <div class="card stat-card bg-danger shadow-sm">
+
+                <div class="card-body">
+
+                    <h6>Verifikasi</h6>
+
+                    <h2>{{ $pengembalian }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {{-- TABLE --}}
+    <div class="card table-card shadow-sm mt-3">
+
+        <div class="card-header bg-white">
+
+            <strong>
+                Data Pengembalian
+            </strong>
+
+        </div>
+
         <div class="card-body">
 
             {{-- ALERT --}}
             @if(session('success'))
 
-                <div class="alert alert-success alert-dismissible fade show">
+                <div class="alert alert-success">
 
                     {{ session('success') }}
 
-                    <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="alert"></button>
+                </div>
+
+            @endif
+
+            @if(session('error'))
+
+                <div class="alert alert-danger">
+
+                    {{ session('error') }}
 
                 </div>
 
             @endif
 
 
-            {{-- TABLE --}}
             <div class="table-responsive">
 
-                <table class="table table-bordered table-hover align-middle">
+                <table class="table table-hover align-middle">
 
-                    <thead class="table-dark">
+                    <thead class="table-light">
 
                         <tr>
 
-                            <th width="5%">No</th>
-
+                            <th>No</th>
                             <th>Nama Alat</th>
-
-                            <th>Tanggal Pinjam</th>
-
+                            <th>Jumlah</th>
+                            <th>Tgl Pinjam</th>
+                            <th>Tgl Kembali</th>
                             <th>Status</th>
-
-                            <th width="20%">Aksi</th>
+                            <th>Aksi</th>
 
                         </tr>
 
@@ -65,153 +180,177 @@
 
                         @forelse($data as $item)
 
-                            <tr>
+                        <tr>
 
-                                {{-- NOMOR --}}
-                                <td>
+                            <td>
+                                {{ $loop->iteration }}
+                            </td>
 
-                                    {{ $loop->iteration }}
+                            <td>
+                                {{ $item->alat->nama_alat }}
+                            </td>
 
-                                </td>
+                            <td>
+                                {{ $item->jumlah }}
+                            </td>
 
+                            <td>
+                                {{ \Carbon\Carbon::parse($item->tanggal_pinjam)->format('d M Y') }}
+                            </td>
 
-                                {{-- NAMA ALAT --}}
-                                <td>
+                            <td>
+                                {{ \Carbon\Carbon::parse($item->tanggal_kembali)->format('d M Y') }}
+                            </td>
 
-                                    <div class="fw-semibold">
+                            <td>
 
-                                        {{ $item->alat->nama_alat }}
+                                @if($item->status == 'pending')
 
-                                    </div>
+                                    <span class="badge bg-warning badge-status">
+                                        Pending
+                                    </span>
 
-                                </td>
+                                @elseif($item->status == 'approved')
 
+                                    <span class="badge bg-primary badge-status">
+                                        Dipinjam
+                                    </span>
 
-                                {{-- TANGGAL --}}
-                                <td>
+                                @elseif($item->status == 'terlambat')
 
-                                    {{ $item->created_at->format('d M Y') }}
+                                    <span class="badge bg-danger badge-status">
+                                        Terlambat
+                                    </span>
 
-                                </td>
+                                @elseif($item->status == 'menunggu_verifikasi')
 
+                                    <span class="badge bg-info badge-status">
+                                        Menunggu Verifikasi
+                                    </span>
 
-                                {{-- STATUS --}}
-                                <td>
+                                @elseif(
+                                    $item->status == 'selesai'
+                                    ||
+                                    $item->status == 'dikembalikan'
+                                )
 
-                                    @php
-                                        $status = strtolower($item->status);
-                                    @endphp
+                                    <span class="badge bg-success badge-status">
+                                        Selesai
+                                    </span>
 
-                                    @if($status == 'dipinjam')
+                                @endif
 
-                                        <span class="badge bg-warning text-dark px-3 py-2">
+                            </td>
 
-                                            Dipinjam
+                            <td>
 
-                                        </span>
+                                @php
 
-                                    @elseif($status == 'selesai')
+                                    $bolehKembali =
+                                    \Carbon\Carbon::now('Asia/Jakarta')
+                                    ->gte(
+                                        \Carbon\Carbon::parse(
+                                            $item->tanggal_kembali
+                                        )->endOfDay()
+                                    );
 
-                                        <span class="badge bg-success px-3 py-2">
-
-                                            Selesai
-
-                                        </span>
-
-                                    @elseif($status == 'dikembalikan')
-
-                                        <span class="badge bg-primary px-3 py-2">
-
-                                            Dikembalikan
-
-                                        </span>
-
-                                    @elseif($status == 'menunggu_verifikasi')
-
-                                        <span class="badge bg-info px-3 py-2">
-
-                                            Menunggu Verifikasi
-
-                                        </span>
-
-                                    @else
-
-                                        <span class="badge bg-secondary px-3 py-2">
-
-                                            {{ $item->status }}
-
-                                        </span>
-
-                                    @endif
-
-                                </td>
+                                @endphp
 
 
-                                {{-- AKSI --}}
-                                <td>
+                                {{-- BOLEH KEMBALIKAN --}}
+                                @if(
+                                    (
+                                        $item->status == 'approved'
+                                        ||
+                                        $item->status == 'terlambat'
+                                    )
+                                    &&
+                                    $bolehKembali
+                                )
 
-                                    @if($status == 'dipinjam')
+                                    <form action="/peminjam/pengembalian/{{ $item->id }}"
+                                        method="POST">
 
-                                        <form action="/peminjam/pengembalian/{{ $item->id }}"
-                                            method="POST">
+                                        @csrf
 
-                                            @csrf
+                                        <button class="btn btn-success btn-sm">
 
-                                            <button type="submit"
-                                                class="btn btn-success btn-sm w-100">
-
-                                                <i class="fas fa-check-circle me-1"></i>
-
-                                                Kembalikan
-
-                                            </button>
-
-                                        </form>
-
-                                    @elseif($status == 'menunggu_verifikasi')
-
-                                        <button class="btn btn-warning btn-sm w-100"
-                                            disabled>
-
-                                            <i class="fas fa-clock me-1"></i>
-
-                                            Menunggu Verifikasi
+                                            Kembalikan
 
                                         </button>
 
-                                    @else
+                                    </form>
 
-                                        <button class="btn btn-secondary btn-sm w-100"
-                                            disabled>
 
-                                            <i class="fas fa-check me-1"></i>
+                                {{-- BELUM WAKTUNYA --}}
+                                @elseif(
+                                    (
+                                        $item->status == 'approved'
+                                        ||
+                                        $item->status == 'terlambat'
+                                    )
+                                    &&
+                                    !$bolehKembali
+                                )
 
-                                            Sudah Selesai
+                                    <button class="btn btn-secondary btn-sm" disabled>
 
-                                        </button>
+                                        Belum Waktunya
 
-                                    @endif
+                                    </button>
 
-                                </td>
 
-                            </tr>
+                                {{-- MENUNGGU --}}
+                                @elseif($item->status == 'menunggu_verifikasi')
+
+                                    <button class="btn btn-warning btn-sm" disabled>
+
+                                        Menunggu
+
+                                    </button>
+
+
+                                {{-- SELESAI --}}
+                                @elseif(
+                                    $item->status == 'selesai'
+                                    ||
+                                    $item->status == 'dikembalikan'
+                                )
+
+                                    <button class="btn btn-success btn-sm" disabled>
+
+                                        Selesai
+
+                                    </button>
+
+
+                                {{-- DEFAULT --}}
+                                @else
+
+                                    <button class="btn btn-secondary btn-sm" disabled>
+
+                                        Tidak Ada
+
+                                    </button>
+
+                                @endif
+
+                            </td>
+
+                        </tr>
 
                         @empty
 
-                            <tr>
+                        <tr>
 
-                                <td colspan="5"
-                                    class="text-center text-muted py-4">
+                            <td colspan="7"
+                                class="text-center text-muted">
 
-                                    <i class="fas fa-box-open fa-2x mb-2"></i>
+                                Tidak ada data
 
-                                    <br>
+                            </td>
 
-                                    Tidak ada data pengembalian
-
-                                </td>
-
-                            </tr>
+                        </tr>
 
                         @endforelse
 

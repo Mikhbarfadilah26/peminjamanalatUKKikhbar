@@ -60,6 +60,10 @@
             border-color: #2563eb;
         }
 
+        .input-group-text{
+            border-radius: 12px;
+        }
+
         /* BUTTON LOGIN */
         .btn-login{
             background: linear-gradient(135deg,#2563eb,#1d4ed8);
@@ -74,6 +78,11 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(37,99,235,.3);
             color: white;
+        }
+
+        /* TOGGLE PASSWORD */
+        #togglePassword{
+            cursor: pointer;
         }
 
     </style>
@@ -181,17 +190,30 @@
 
                                 <div class="input-group">
 
+                                    {{-- ICON LOCK --}}
                                     <span class="input-group-text bg-white">
 
                                         <i class="fas fa-lock text-primary"></i>
 
                                     </span>
 
+                                    {{-- INPUT PASSWORD --}}
                                     <input type="password"
                                         name="password"
+                                        id="password"
                                         class="form-control"
                                         placeholder="Masukkan password"
                                         required>
+
+                                    {{-- TOGGLE PASSWORD --}}
+                                    <button type="button"
+                                        class="input-group-text bg-white"
+                                        id="togglePassword">
+
+                                        <i class="fas fa-eye text-secondary"
+                                            id="iconPassword"></i>
+
+                                    </button>
 
                                 </div>
 
@@ -226,6 +248,45 @@
 
     {{-- BOOTSTRAP JS --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    {{-- SHOW / HIDE PASSWORD --}}
+    <script>
+
+        const togglePassword =
+        document.getElementById('togglePassword');
+
+        const password =
+        document.getElementById('password');
+
+        const iconPassword =
+        document.getElementById('iconPassword');
+
+        togglePassword.addEventListener('click', function(){
+
+            if(password.type === 'password')
+            {
+
+                password.type = 'text';
+
+                iconPassword.classList.remove('fa-eye');
+
+                iconPassword.classList.add('fa-eye-slash');
+
+            }
+            else
+            {
+
+                password.type = 'password';
+
+                iconPassword.classList.remove('fa-eye-slash');
+
+                iconPassword.classList.add('fa-eye');
+
+            }
+
+        });
+
+    </script>
 
 </body>
 

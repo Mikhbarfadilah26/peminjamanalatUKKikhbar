@@ -1,405 +1,829 @@
 <style>
+    /* =========================================
+       NAVBAR
+    ========================================= */
 
-/* =========================
-   NAVBAR (LEBIH RAMPING)
-========================= */
+    .custom-navbar {
 
-.custom-navbar{
-    background: linear-gradient(
-        135deg,
-        #0f172a,
-        #1e3a8a
-    );
+        background:
+            linear-gradient(135deg,
+                #0f172a,
+                #1e3a8a);
 
-    padding-top: 6px;
-    padding-bottom: 6px;
+        padding-top: 8px;
+        padding-bottom: 8px;
 
-    min-height: 68px;
-}
+        min-height: 70px;
 
+        position: relative;
 
+        z-index: 999;
+    }
 
-/* =========================
-   BRAND
-========================= */
 
-.navbar-brand{
 
-    padding: 0;
+    /* =========================================
+       BRAND
+    ========================================= */
 
-    display: flex;
+    .navbar-brand {
 
-    align-items: center;
+        display: flex;
+        align-items: center;
 
-}
+        color: white !important;
 
+        font-weight: 700;
 
+    }
 
-/* =========================
-   RUNNING TEXT
-========================= */
 
-.running-text{
 
-    width: 180px;
+    /* =========================================
+       RUNNING TEXT
+    ========================================= */
 
-    overflow: hidden;
+    .running-text {
 
-    white-space: nowrap;
+        width: 210px;
 
-    position: relative;
+        overflow: hidden;
 
-    line-height: 1.1;
+        white-space: nowrap;
 
-}
+        position: relative;
 
+    }
 
-.running-text span{
 
-    display: inline-block;
+    .running-text span {
 
-    padding-left: 100%;
+        display: inline-block;
 
-    animation:
-        runningText
-        12s
-        linear
-        infinite;
+        padding-left: 100%;
 
-    color: #fff;
+        animation:
+            runningText 12s linear infinite;
 
-    font-size: 14px;
+        color: white;
 
-    font-weight: 700;
+        font-size: 14px;
 
-    text-shadow:
-        0 0 8px
-        rgba(
-            255,
-            255,
-            255,
-            .4
-        );
+        font-weight: 700;
 
-}
+    }
 
 
-@keyframes runningText{
+    @keyframes runningText {
 
-0%{
+        0% {
+            transform: translateX(0);
+        }
 
-transform:
-translateX(0);
+        100% {
+            transform: translateX(-100%);
+        }
 
-}
+    }
 
-100%{
 
-transform:
-translateX(-100%);
 
-}
+    /* =========================================
+       NAV MENU
+    ========================================= */
 
-}
+    .navbar-nav {
 
+        gap: 6px;
 
+    }
 
-/* =========================
-   SUBTITLE
-========================= */
 
-.navbar-brand small{
+    .navbar .nav-link {
 
-    font-size: 10px;
+        position: relative;
 
-    display: block;
+        color:
+            rgba(255, 255, 255, .88) !important;
 
-    opacity: .8;
+        padding:
+            10px 16px;
 
-}
+        border-radius: 14px;
 
+        font-size: 14px;
 
+        font-weight: 600;
 
-/* =========================
-   MENU
-========================= */
+        transition: .25s;
 
-.navbar .nav-link{
+    }
 
-    color:
-    rgba(
-        255,
-        255,
-        255,
-        .88
-    ) !important;
 
-    padding:
-        8px
-        12px;
 
-    font-size:
-        14px;
+    /* hover */
 
-    transition:
-        .25s;
+    .navbar .nav-link:hover {
 
-}
+        background:
+            rgba(255, 255, 255, .10);
 
+        color:
+            white !important;
 
-.navbar .nav-link:hover{
+    }
 
-    color:
-    #facc15 !important;
 
-    transform:
-    translateY(-1px);
 
-}
+    /* active */
 
+    .navbar .nav-link.active {
 
+        background:
+            rgba(255, 255, 255, .15);
 
-/* =========================
-   LOGIN
-========================= */
+        color:
+            white !important;
 
-.btn-login{
+    }
 
-    background:
-    #facc15;
 
-    color:
-    #111827;
 
-    border-radius:
-    10px;
+    /* =========================================
+       SEARCH BOX
+    ========================================= */
 
-    padding:
-        7px
-        18px;
+    .search-box {
 
-    font-size:
-        13px;
+        position: relative;
 
-    transition:
-        .25s;
+        margin-left: 18px;
 
-}
+    }
 
 
-.btn-login:hover{
+    .search-box input {
 
-background:
-#fde047;
+        width: 240px;
 
-transform:
-translateY(-1px);
+        height: 44px;
 
-}
+        border: none;
 
+        outline: none;
 
+        border-radius: 14px;
 
-/* =========================
-   MOBILE
-========================= */
+        background:
+            rgba(255, 255, 255, .12);
 
-@media(max-width:768px){
+        backdrop-filter: blur(10px);
 
-.custom-navbar{
+        padding:
+            0 16px 0 45px;
 
-padding-top:8px;
+        color: white;
 
-padding-bottom:8px;
+        font-size: 14px;
 
-}
+        transition: .25s;
 
+    }
 
-.running-text{
 
-width:150px;
+    .search-box input::placeholder {
 
-}
+        color:
+            rgba(255, 255, 255, .65);
 
+    }
 
-.running-text span{
 
-font-size:12px;
+    .search-box input:focus {
 
-}
+        background:
+            rgba(255, 255, 255, .18);
 
+        box-shadow:
+            0 0 0 3px rgba(255, 255, 255, .12);
 
-.navbar .nav-link{
+    }
 
-padding:8px;
 
-}
+    .search-box i {
 
+        position: absolute;
 
-.btn-login{
+        top: 50%;
+        left: 16px;
 
-width:100%;
+        transform: translateY(-50%);
 
-margin-top:8px;
+        color:
+            rgba(255, 255, 255, .7);
 
-}
+        font-size: 14px;
 
-}
+    }
 
+
+
+    /* =========================================
+       DROPDOWN BUTTON
+    ========================================= */
+
+    .dropdown-toggle::after {
+
+        margin-left: 8px;
+
+        vertical-align: middle;
+
+    }
+
+
+
+    /* =========================================
+       MEGA MENU
+    ========================================= */
+
+    .mega-dropdown {
+
+        width: 580px;
+
+        border: none;
+
+        border-radius: 24px;
+
+        padding: 0;
+
+        overflow: hidden;
+
+        margin-top: 18px;
+
+        left: 50% !important;
+
+        transform: translateX(-50%);
+
+        background: white;
+
+        box-shadow:
+            0 20px 60px rgba(0, 0, 0, .18);
+
+        animation:
+            dropdownFade .25s ease;
+
+    }
+
+
+
+    /* panah atas */
+
+    .mega-dropdown::before {
+
+        content: '';
+
+        position: absolute;
+
+        top: -10px;
+
+        left: 50%;
+
+        transform:
+            translateX(-50%) rotate(45deg);
+
+        width: 22px;
+        height: 22px;
+
+        background: white;
+
+    }
+
+
+
+    /* dropdown content */
+
+    .dropdown-wrapper {
+
+        padding: 28px;
+
+    }
+
+
+    .dropdown-title {
+
+        color: #7c3aed;
+
+        font-weight: 700;
+
+        font-size: 15px;
+
+        margin-bottom: 25px;
+
+    }
+
+
+
+    /* item */
+
+    .mega-item {
+
+        display: flex;
+
+        align-items: flex-start;
+
+        gap: 18px;
+
+        padding: 16px;
+
+        border-radius: 18px;
+
+        text-decoration: none;
+
+        transition: .25s;
+
+        margin-bottom: 10px;
+
+    }
+
+
+    .mega-item:hover {
+
+        background:
+            rgba(124, 58, 237, .06);
+
+        transform:
+            translateY(-2px);
+
+    }
+
+
+
+    /* icon */
+
+    .mega-icon {
+
+        width: 52px;
+        height: 52px;
+
+        border-radius: 16px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background:
+            rgba(124, 58, 237, .12);
+
+        color:
+            #7c3aed;
+
+        font-size: 20px;
+
+    }
+
+
+
+    /* title */
+
+    .mega-item h5 {
+
+        margin: 0 0 6px;
+
+        color: #111827;
+
+        font-size: 17px;
+
+        font-weight: 700;
+
+    }
+
+
+
+    /* desc */
+
+    .mega-item p {
+
+        margin: 0;
+
+        color: #6b7280;
+
+        font-size: 15px;
+
+        line-height: 1.5;
+
+    }
+
+
+
+    /* =========================================
+       LOGIN BUTTON
+    ========================================= */
+
+    .btn-login {
+
+        background:
+            #facc15;
+
+        color:
+            #111827;
+
+        border-radius:
+            12px;
+
+        padding:
+            9px 18px;
+
+        font-size:
+            13px;
+
+        font-weight: 700;
+
+        transition: .25s;
+
+    }
+
+
+    .btn-login:hover {
+
+        background:
+            #fde047;
+
+        transform:
+            translateY(-1px);
+
+    }
+
+
+
+    /* =========================================
+       ANIMATION
+    ========================================= */
+
+    @keyframes dropdownFade {
+
+        from {
+
+            opacity: 0;
+
+            transform:
+                translateX(-50%) translateY(10px);
+
+        }
+
+        to {
+
+            opacity: 1;
+
+            transform:
+                translateX(-50%) translateY(0);
+
+        }
+
+    }
+
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media(max-width:768px) {
+
+        .mega-dropdown {
+
+            width: 100%;
+
+            left: 0 !important;
+
+            transform: none !important;
+
+            margin-top: 10px;
+
+        }
+
+
+        .mega-dropdown::before {
+
+            display: none;
+
+        }
+
+
+        .running-text {
+
+            width: 150px;
+
+        }
+
+
+        .search-box {
+
+            margin:
+                15px 0;
+
+            width: 100%;
+
+        }
+
+
+        .search-box input {
+
+            width: 100%;
+
+        }
+
+
+        .btn-login {
+
+            width: 100%;
+
+            margin-top: 10px;
+
+        }
+
+    }
 </style>
 
 
 
+
+
 <nav
-class="navbar navbar-expand-lg navbar-dark shadow-sm custom-navbar">
+    class="navbar navbar-expand-lg navbar-dark shadow-sm custom-navbar">
 
-<div class="container">
+    <div class="container">
 
 
 
 
-<a
-class="navbar-brand fw-bold d-flex align-items-center"
-href="/">
+        <!-- BRAND -->
+        <a
+            class="navbar-brand"
+            href="/">
 
-<i
-class="fas fa-tools me-2 text-warning"
-style="font-size:22px;">
-</i>
+            <i
+                class="fas fa-tools text-warning me-2"
+                style="font-size:22px;">
+            </i>
 
 
-<div>
+            <div class="running-text">
 
-<div
-class="running-text">
+                <span>
 
-<span>
+                    APLIKASI PEMINJAMAN ALAT •
+                    LARAVEL 13 • 2025/2026
 
-🔥 SEWA ALAT UKK •
-APLIKASI PEMINJAMAN ALAT •
-LARAVEL 13 •
-UKK RPL 2025/2026 •
+                </span>
 
-</span>
+            </div>
 
-</div>
+        </a>
 
 
 
-</div>
 
-</a>
 
+        <!-- TOGGLER -->
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav">
 
+            <span class="navbar-toggler-icon"></span>
 
+        </button>
 
-<button
-class="navbar-toggler"
-type="button"
-data-bs-toggle="collapse"
-data-bs-target="#navbarNav">
 
-<span
-class="navbar-toggler-icon">
-</span>
 
-</button>
 
 
+        <div
+            class="collapse navbar-collapse"
+            id="navbarNav">
 
+            <ul
+                class="navbar-nav ms-auto align-items-lg-center">
 
-<div
-class="collapse navbar-collapse"
-id="navbarNav">
 
-<ul
-class="navbar-nav ms-auto align-items-lg-center">
 
+                <!-- HOME -->
+                <li class="nav-item">
 
-<li class="nav-item">
+                    <a
+                        class="nav-link play-sound {{ request()->is('/') ? 'active' : '' }}"
+                        href="/">
 
-<a
-class="nav-link"
-href="/">
+                        <i class="fas fa-home me-1"></i>
 
-<i class="fas fa-home me-1"></i>
+                        Home
 
-Home
+                    </a>
 
-</a>
+                </li>
 
-</li>
 
 
+                <!-- FITUR DROPDOWN -->
+                <li class="nav-item dropdown position-static">
 
-<li class="nav-item">
+                    <a class="nav-link dropdown-toggle play-sound {{ request()->is('fitur*') ? 'active' : '' }}"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
 
-<a
-class="nav-link"
-href="/fitur">
+                        <i class="fas fa-layer-group me-1"></i>
+                        Fitur
 
-<i class="fas fa-list me-1"></i>
+                    </a>
 
-Fitur
+                    <!-- MEGA MENU -->
+                    <div class="dropdown-menu mega-dropdown">
 
-</a>
+                        <div class="dropdown-wrapper">
 
-</li>
+                            <div class="dropdown-title">
+                                Solutions
+                            </div>
 
+                            <!-- ITEM 1 -->
+                            <div class="mega-item">
 
+                                <div class="mega-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
 
-<li class="nav-item">
+                                <div>
+                                    <h5>Sistem Peminjaman</h5>
 
-<a
-class="nav-link"
-href="/tentang">
+                                    <p>
+                                        Kelola peminjaman alat dengan cepat dan modern
+                                    </p>
+                                </div>
 
-<i class="fas fa-info-circle me-1"></i>
+                            </div>
 
-Tentang
+                            <!-- ITEM 2 -->
+                            <div class="mega-item">
 
-</a>
+                                <div class="mega-icon">
+                                    <i class="fas fa-search"></i>
+                                </div>
 
-</li>
+                                <div>
+                                    <h5>Monitoring Alat</h5>
 
+                                    <p>
+                                        Pantau status alat dan siswa yang meminjam
+                                    </p>
+                                </div>
 
+                            </div>
 
-<li class="nav-item">
+                            <!-- ITEM 3 -->
+                            <div class="mega-item">
 
-<a
-class="nav-link"
-href="/kontak">
+                                <div class="mega-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
 
-<i class="fas fa-phone-alt me-1"></i>
+                                <div>
+                                    <h5>Laporan Otomatis</h5>
 
-Kontak
+                                    <p>
+                                        Cetak laporan peminjaman dengan mudah
+                                    </p>
+                                </div>
 
-</a>
+                            </div>
 
-</li>
+                        </div>
 
+                    </div>
 
+                </li>
 
-<li
-class="nav-item ms-lg-2">
 
-<a
-href="/login"
-class="btn btn-login fw-bold">
+                <!-- TENTANG -->
+                <li class="nav-item">
 
-<i
-class="fas fa-sign-in-alt me-2">
-</i>
+                    <a
+                        class="nav-link play-sound {{ request()->is('tentang') ? 'active' : '' }}"
+                        href="/tentang">
 
-Login
+                        <i class="fas fa-info-circle me-1"></i>
 
-</a>
+                        Tentang
 
-</li>
+                    </a>
 
-</ul>
+                </li>
 
-</div>
 
-</div>
+
+
+
+                <!-- KONTAK -->
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link play-sound {{ request()->is('kontak') ? 'active' : '' }}"
+                        href="/kontak">
+
+                        <i class="fas fa-phone-alt me-1"></i>
+
+                        Kontak
+
+                    </a>
+
+                </li>
+
+
+
+
+
+                <!-- SEARCH -->
+                <li class="nav-item">
+
+                    <form class="search-box">
+
+                        <i class="fas fa-search"></i>
+
+                        <input
+                            type="text"
+                            placeholder="Cari sesuatu...">
+
+                    </form>
+
+                </li>
+
+
+
+
+
+                <!-- LOGIN -->
+                <li class="nav-item ms-lg-2">
+
+                    <a
+                        href="/login"
+                        class="btn btn-login play-sound">
+
+                        <i class="fas fa-sign-in-alt me-2"></i>
+
+                        Login
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
 
 </nav>
+
+
+
+
+
+<!-- AUDIO -->
+<audio id="navbarSound" preload="auto">
+
+    <source
+        src="{{ asset('audio/klik.mp3') }}"
+        type="audio/mpeg">
+
+</audio>
+
+
+
+
+
+<!-- SOUND SCRIPT -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const audio =
+            document.getElementById('navbarSound');
+
+        const buttons =
+            document.querySelectorAll('.play-sound');
+
+        buttons.forEach(button => {
+
+            button.addEventListener('click', function() {
+
+                audio.currentTime = 0;
+
+                audio.play();
+
+            });
+
+        });
+
+    });
+</script>

@@ -5,358 +5,472 @@
 <style>
 
 .page-header{
-background:linear-gradient(135deg,#1e3a8a,#2563eb);
-border-radius:20px;
-padding:28px;
-color:white;
-margin-bottom:24px;
-box-shadow:0 15px 30px rgba(37,99,235,.18);
+    background:linear-gradient(135deg,#1e3a8a,#2563eb);
+    border-radius:20px;
+    padding:28px;
+    color:white;
+    margin-bottom:24px;
+    box-shadow:0 15px 30px rgba(37,99,235,.18);
 }
 
 .card-modern{
-border:none;
-border-radius:20px;
-overflow:hidden;
-box-shadow:0 12px 25px rgba(0,0,0,.08);
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 12px 25px rgba(0,0,0,.08);
 }
 
 .table-modern{
-margin-bottom:0;
+    margin-bottom:0;
 }
 
 .table-modern thead{
-background:#0f172a;
-color:white;
+    background:#0f172a;
+    color:white;
 }
 
 .table-modern th{
-border:none;
-padding:18px;
-font-size:14px;
-font-weight:700;
-white-space:nowrap;
+    border:none;
+    padding:18px;
+    font-size:14px;
+    font-weight:700;
+    white-space:nowrap;
 }
 
 .table-modern td{
-padding:18px;
-vertical-align:middle;
-border-color:#eef2f7;
+    padding:18px;
+    vertical-align:middle;
+    border-color:#eef2f7;
 }
 
 .table-modern tbody tr{
-transition:.25s;
+    transition:.25s;
 }
 
 .table-modern tbody tr:hover{
-background:#f8fafc;
-transform:scale(1.002);
+    background:#f8fafc;
 }
 
 .number-box{
-width:42px;
-height:42px;
-border-radius:12px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#e0f2fe;
-font-weight:700;
-color:#0369a1;
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#e0f2fe;
+    font-weight:700;
+    color:#0369a1;
 }
 
 .user-box{
-display:flex;
-align-items:center;
-gap:12px;
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
 .user-avatar{
-width:42px;
-height:42px;
-border-radius:50%;
-background:linear-gradient(135deg,#2563eb,#60a5fa);
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:700;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#2563eb,#60a5fa);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
 }
 
 .alat-box{
-background:#f1f5f9;
-padding:8px 14px;
-border-radius:12px;
-display:inline-block;
-font-weight:600;
+    background:#f1f5f9;
+    padding:8px 14px;
+    border-radius:12px;
+    display:inline-block;
+    font-weight:600;
 }
 
 .qty-box{
-background:#dcfce7;
-padding:8px 14px;
-border-radius:10px;
-display:inline-block;
-font-weight:700;
-color:#166534;
+    background:#dcfce7;
+    padding:8px 14px;
+    border-radius:10px;
+    display:inline-block;
+    font-weight:700;
+    color:#166534;
 }
 
 .badge-modern{
-padding:9px 14px;
-border-radius:30px;
-font-size:12px;
-font-weight:700;
+    padding:9px 14px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:700;
 }
 
 .date-box{
-font-size:13px;
-color:#64748b;
-font-weight:600;
+    font-size:13px;
+    color:#64748b;
+    font-weight:600;
 }
 
 .empty-box{
-padding:60px;
-text-align:center;
-color:#64748b;
+    padding:60px;
+    text-align:center;
+    color:#64748b;
 }
 
 .empty-box i{
-font-size:55px;
-margin-bottom:15px;
-opacity:.3;
+    font-size:55px;
+    margin-bottom:15px;
+    opacity:.3;
+}
+
+.aksi-group{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+}
+
+.aksi-group form{
+    margin:0;
+}
+
+.foto-alat{
+    width:70px;
+    height:70px;
+    object-fit:cover;
+    border-radius:12px;
+    border:2px solid #e5e7eb;
+    box-shadow:0 4px 10px rgba(0,0,0,.08);
 }
 
 </style>
-
 
 <div class="container-fluid">
 
 {{-- HEADER --}}
 <div class="page-header">
 
-<div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex justify-content-between align-items-center">
 
-<div>
+        <div>
 
-<h2 class="mb-2">
+            <h2 class="mb-2">
+                <i class="fas fa-handshake mr-2"></i>
+                Konfirmasi Peminjaman
+            </h2>
 
-<i class="fas fa-handshake mr-2"></i>
+            <p class="mb-0">
+                Monitoring seluruh aktivitas peminjaman alat
+            </p>
 
-Data Peminjaman
+        </div>
 
-</h2>
+        <div>
+            <h5>{{ now()->format('d F Y') }}</h5>
+        </div>
 
-<p class="mb-0">
-
-Monitoring seluruh aktivitas peminjaman alat
-
-</p>
-
-</div>
-
-<div>
-
-<h5>
-
-{{ now()->format('d F Y') }}
-
-</h5>
+    </div>
 
 </div>
 
-</div>
 
-</div>
+{{-- ALERT --}}
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show">
 
+        {{ session('success') }}
+
+        <button
+            type="button"
+            class="close"
+            data-dismiss="alert">
+
+            <span>&times;</span>
+
+        </button>
+
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show">
+
+        {{ session('error') }}
+
+        <button
+            type="button"
+            class="close"
+            data-dismiss="alert">
+
+            <span>&times;</span>
+
+        </button>
+
+    </div>
+@endif
 
 
 <div class="card card-modern">
 
-<div class="card-body p-0">
+    <div class="card-body p-0">
 
-<div class="table-responsive">
+        <div class="table-responsive">
 
-<table class="table table-modern">
+            <table class="table table-modern">
 
-<thead>
+                <thead>
 
-<tr>
+                    <tr>
 
-<th>No</th>
+                        <th>No</th>
+                        <th>Foto Alat</th>
+                        <th>Peminjam</th>
+                        <th>Alat</th>
+                        <th>Jumlah</th>
+                        <th>Status</th>
+                        <th>Tanggal</th>
+                        <th width="320">Aksi</th>
 
-<th>Peminjam</th>
+                    </tr>
 
-<th>Alat</th>
+                </thead>
 
-<th>Jumlah</th>
+                <tbody>
 
-<th>Status</th>
+                    @forelse($data as $item)
 
-<th>Tanggal</th>
+                    <tr>
 
-</tr>
+                        <td>
 
-</thead>
+                            <div class="number-box">
 
+                                {{ $loop->iteration }}
 
-<tbody>
+                            </div>
 
-@forelse($data as $item)
+                        </td>
 
-<tr>
 
-<td>
+                        <td>
 
-<div class="number-box">
+                            @if($item->alat && $item->alat->foto)
 
-{{ $loop->iteration }}
+                                <img
+                                    src="{{ asset('foto/alat/' . $item->alat->foto) }}"
+                                    class="foto-alat"
+                                    alt="{{ $item->alat->nama_alat }}">
 
-</div>
+                            @else
 
-</td>
+                                <span class="text-muted">
 
+                                    No Image
 
-<td>
+                                </span>
 
-<div class="user-box">
+                            @endif
 
-<div class="user-avatar">
+                        </td>
 
-{{ strtoupper(substr($item->user->nama ?? 'U',0,1)) }}
 
-</div>
+                        <td>
 
-<div>
+                            <div class="user-box">
 
-<b>
+                                <div class="user-avatar">
 
-{{ $item->user->nama ?? '-' }}
+                                    {{ strtoupper(substr($item->user->nama ?? 'U',0,1)) }}
 
-</b>
+                                </div>
 
-</div>
+                                <div>
 
-</div>
+                                    <b>
 
-</td>
+                                        {{ $item->user->nama ?? '-' }}
 
+                                    </b>
 
-<td>
+                                </div>
 
-<div class="alat-box">
+                            </div>
 
-{{ $item->alat->nama_alat ?? '-' }}
+                        </td>
 
-</div>
 
-</td>
+                        <td>
 
+                            <div class="alat-box">
 
-<td>
+                                {{ $item->alat->nama_alat ?? '-' }}
 
-<div class="qty-box">
+                            </div>
 
-{{ $item->jumlah }}
+                        </td>
 
-</div>
 
-</td>
+                        <td>
 
+                            <div class="qty-box">
 
-<td>
+                                {{ $item->jumlah }}
 
-@php
+                            </div>
 
-$badge = match($item->status){
+                        </td>
 
-'pending'
-=> 'warning',
 
-'dipinjam'
-=> 'primary',
+                        <td>
 
-'menunggu_verifikasi'
-=> 'info',
+                            @php
 
-'selesai'
-=> 'success',
+                                $badge = match($item->status){
 
-default
-=> 'secondary'
+                                    'pending' => 'warning',
+                                    'approved' => 'success',
+                                    'rejected' => 'danger',
+                                    'dipinjam' => 'primary',
+                                    'menunggu_verifikasi' => 'info',
+                                    'selesai' => 'success',
 
-};
+                                    default => 'secondary'
 
-@endphp
+                                };
 
+                            @endphp
 
-<span
-class="badge badge-{{ $badge }} badge-modern">
+                            <span class="badge badge-{{ $badge }} badge-modern">
 
-{{ strtoupper($item->status) }}
+                                {{ strtoupper($item->status) }}
 
-</span>
+                            </span>
 
-</td>
+                        </td>
 
 
-<td>
+                        <td>
 
-<div class="date-box">
+                            <div class="date-box">
 
-<i class="far fa-calendar-alt mr-1"></i>
+                                <i class="far fa-calendar-alt mr-1"></i>
 
-{{ $item->created_at->format('d M Y') }}
+                                {{ $item->created_at->format('d M Y') }}
 
-<br>
+                                <br>
 
-<small>
+                                <small>
 
-{{ $item->created_at->format('H:i') }}
+                                    {{ $item->created_at->format('H:i') }}
 
-</small>
+                                </small>
 
-</div>
+                            </div>
 
-</td>
+                        </td>
 
-</tr>
 
-@empty
+                        <td>
 
-<tr>
+                            <div class="aksi-group">
 
-<td colspan="6">
+                                @if($item->status == 'pending')
 
-<div class="empty-box">
+                                    <form
+                                        action="{{ route('admin.peminjaman.approve',$item->id) }}"
+                                        method="POST">
 
-<i class="fas fa-folder-open"></i>
+                                        @csrf
 
-<h5>
+                                        <button
+                                            type="submit"
+                                            class="btn btn-success btn-sm">
 
-Belum Ada Data
+                                            <i class="fas fa-check"></i>
+                                            Approve
 
-</h5>
+                                        </button>
 
-<p>
+                                    </form>
 
-Data peminjaman akan tampil di sini
 
-</p>
+                                    <form
+                                        action="{{ route('admin.peminjaman.reject',$item->id) }}"
+                                        method="POST">
 
-</div>
+                                        @csrf
 
-</td>
+                                        <button
+                                            type="submit"
+                                            class="btn btn-danger btn-sm">
 
-</tr>
+                                            <i class="fas fa-times"></i>
+                                            Reject
 
-@endforelse
+                                        </button>
 
+                                    </form>
 
-</tbody>
+                                @endif
 
-</table>
 
-</div>
+                                <form
+                                    action="{{ route('admin.peminjaman.destroy',$item->id) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Yakin ingin menghapus data ini?')">
 
-</div>
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-dark btn-sm">
+
+                                        <i class="fas fa-trash"></i>
+                                        Hapus
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    @empty
+
+                    <tr>
+
+                        <td colspan="8">
+
+                            <div class="empty-box">
+
+                                <i class="fas fa-folder-open"></i>
+
+                                <h5>
+                                    Belum Ada Data
+                                </h5>
+
+                                <p>
+                                    Data peminjaman akan tampil di sini
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    @endforelse
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
 </div>
 

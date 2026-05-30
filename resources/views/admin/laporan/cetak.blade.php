@@ -1,67 +1,93 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Cetak Laporan</title>
+
+    <title>Laporan</title>
 
     <style>
-        body { font-family: Arial; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid black; padding: 8px; }
+
+        body{
+            font-family: Arial, sans-serif;
+        }
+
+        table{
+            width:100%;
+            border-collapse: collapse;
+        }
+
+        table th,
+        table td{
+            border:1px solid #000;
+            padding:8px;
+        }
+
+        h2{
+            text-align:center;
+        }
+
     </style>
 
 </head>
 
 <body onload="window.print()">
 
-<h3>Laporan Peminjaman & Pengembalian</h3>
+    <h2>
+        LAPORAN PEMINJAMAN ALAT
+    </h2>
 
-<p>
-    Periode: {{ $mulai }} - {{ $sampai }}
-</p>
+    <p>
+        Status :
+        <b>{{ strtoupper($status ?? 'SEMUA') }}</b>
+    </p>
 
-<hr>
+    <table>
 
-<h4>Peminjaman</h4>
+        <tr>
 
-<table>
+            <th>No</th>
+            <th>User</th>
+            <th>Alat</th>
+            <th>Jumlah</th>
+            <th>Status</th>
+            <th>Tanggal</th>
 
-<tr>
-    <th>User</th>
-    <th>Alat</th>
-    <th>Status</th>
-</tr>
+        </tr>
 
-@foreach($peminjaman as $p)
-<tr>
-    <td>{{ $p->user->nama }}</td>
-    <td>{{ $p->alat->nama_alat }}</td>
-    <td>{{ $p->status }}</td>
-</tr>
-@endforeach
+        @foreach($data as $p)
 
-</table>
+        <tr>
 
-<br>
+            <td>
+                {{ $loop->iteration }}
+            </td>
 
-<h4>Pengembalian</h4>
+            <td>
+                {{ $p->user->nama ?? '-' }}
+            </td>
 
-<table>
+            <td>
+                {{ $p->alat->nama_alat ?? '-' }}
+            </td>
 
-<tr>
-    <th>User</th>
-    <th>Alat</th>
-    <th>Denda</th>
-</tr>
+            <td>
+                {{ $p->jumlah }}
+            </td>
 
-@foreach($pengembalian as $k)
-<tr>
-    <td>{{ $k->peminjaman->user->nama }}</td>
-    <td>{{ $k->peminjaman->alat->nama_alat }}</td>
-    <td>Rp {{ number_format($k->denda) }}</td>
-</tr>
-@endforeach
+            <td>
+                {{ strtoupper($p->status) }}
+            </td>
 
-</table>
+            <td>
+                {{ $p->created_at->format('d-m-Y') }}
+            </td>
+
+        </tr>
+
+        @endforeach
+
+    </table>
 
 </body>
+
 </html>
