@@ -1,4 +1,3 @@
-
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
     {{-- LOGO --}}
@@ -49,9 +48,7 @@
 
     </a>
 
-
-    <div class="sidebar">
-
+    <div class="sidebar pt-3">
         <nav class="mt-2">
 
             <ul class="nav nav-pills nav-sidebar flex-column">

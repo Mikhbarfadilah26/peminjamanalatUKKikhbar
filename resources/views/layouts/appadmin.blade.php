@@ -10,27 +10,22 @@
 
     <title>Admin Dashboard</title>
 
-    {{-- ADMIN LTE --}}
     <link rel="stylesheet"
         href="{{ asset('dist/css/adminlte.min.css') }}">
 
-    {{-- FONT AWESOME --}}
     <link rel="stylesheet"
         href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
 
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
 
     <div class="wrapper">
 
-        {{-- NAVBAR --}}
         @include('layouts.admin.navbar')
 
-        {{-- SIDEBAR --}}
         @include('layouts.admin.sidebar')
 
-        {{-- CONTENT --}}
         <div class="content-wrapper">
 
             <section class="content pt-4">
@@ -45,12 +40,10 @@
 
         </div>
 
-        {{-- FOOTER --}}
         @include('layouts.admin.footer')
 
     </div>
 
-    {{-- JS --}}
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

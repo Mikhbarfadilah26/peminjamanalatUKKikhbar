@@ -1,10 +1,8 @@
-
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
 
     {{-- LEFT --}}
     <ul class="navbar-nav">
 
-        {{-- BUTTON TOGGLE SIDEBAR --}}
         <li class="nav-item">
 
             <a class="nav-link"
@@ -20,29 +18,59 @@
 
     </ul>
 
+    {{-- RUNNING TEXT --}}
+    <div class="mx-auto d-none d-md-block" style="width:60%; overflow:hidden;">
 
-    {{-- RIGHT --}}
-    <ul class="navbar-nav ml-auto">
+        <marquee
+            behavior="scroll"
+            direction="left"
+            scrollamount="5"
+            style="
+                color:#2563eb;
+                font-weight:600;
+                font-size:15px;
+            ">
 
-        <li class="nav-item">
+            🔧 Selamat Datang Petugas Sistem Peminjaman Alat • Verifikasi Peminjaman Dengan Teliti • Pastikan Stok Alat Sesuai • Lakukan Pengembalian Tepat Waktu • Berikan Pelayanan Terbaik Kepada Peminjam • UKK RPL 2025/2026
 
-            <form action="/logout"
-                method="POST">
+        </marquee>
 
-                @csrf
+    </div>
 
-                <button class="btn btn-danger btn-sm">
+{{-- RIGHT --}}
+<ul class="navbar-nav ml-auto align-items-center">
 
-                    <i class="fas fa-sign-out-alt mr-1"></i>
+    {{-- LOGO PETUGAS --}}
+<li class="nav-item mr-3">
 
-                    Logout
+    <span class="badge badge-success p-2">
 
-                </button>
+        <i class="fas fa-user-shield mr-1"></i>
 
-            </form>
+        PETUGAS
 
-        </li>
+    </span>
 
-    </ul>
+</li>
+    {{-- LOGOUT --}}
+    <li class="nav-item">
 
+        <form action="/logout"
+            method="POST">
+
+            @csrf
+
+            <button class="btn btn-danger btn-sm">
+
+                <i class="fas fa-sign-out-alt mr-1"></i>
+
+                Logout
+
+            </button>
+
+        </form>
+
+    </li>
+
+</ul>
 </nav>

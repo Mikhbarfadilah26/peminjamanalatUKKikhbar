@@ -17,6 +17,25 @@
 
     </ul>
 
+    {{-- RUNNING TEXT --}}
+    <div class="mx-auto d-none d-md-block" style="width:50%;">
+
+        <marquee
+            behavior="scroll"
+            direction="left"
+            scrollamount="6"
+            style="
+                font-weight:600;
+                color:#2563eb;
+                font-size:15px;
+            ">
+
+            📢 Selamat Datang di Sistem Peminjaman Alat • Kelola Data Alat • Kelola Peminjaman • Kelola Pengembalian • UKK RPL 2025/2026
+
+        </marquee>
+
+    </div>
+
     {{-- RIGHT --}}
     <ul class="navbar-nav ml-auto">
 

@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Peminjam;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\ModelPeminjaman;
-
+use App\Models\Pengembalian; // Pastikan model Pengembalian di-import di sini
 use Carbon\Carbon;
 
 class ControllerPengembalianPeminjam extends Controller
@@ -270,25 +269,36 @@ class ControllerPengembalianPeminjam extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | UPDATE STATUS
+        | UPDATE STATUS PEMINJAMAN
         |--------------------------------------------------------------------------
         */
 
-        $pinjam->status =
-        'menunggu_verifikasi';
+        $pinjam->status = 'menunggu_verifikasi';
+        $pinjam->save();
 
 
         /*
         |--------------------------------------------------------------------------
-        | SIMPAN TANGGAL PENGEMBALIAN ASLI
+        | SIMPAN DATA KE TABEL PENGEMBALIAN (Sesuai Struktur Database)
         |--------------------------------------------------------------------------
         */
 
-        $pinjam->tanggal_dikembalikan =
-        Carbon::now('Asia/Jakarta');
+        // Menghitung hari keterlambatan jika status sebelumnya adalah 'terlambat'
+        $hariKeterlambatan = 0;
+        if ($sekarang->gt($tanggalKembali)) {
+            $hariKeterlambatan = (int) $sekarang->diffInDays($tanggalKembali);
+        }
 
-
-        $pinjam->save();
+        \Illuminate\Support\Facades\DB::table('pengembalians')->insert([
+            'peminjaman_id'        => $pinjam->id,
+            'tanggal_pengembalian' => $sekarang->toDateString(),
+            'keterlambatan'        => $hariKeterlambatan,
+            'denda'                => 0, // Kalkulasi denda bisa disesuaikan nanti jika ada aturan tarif denda
+            'kondisi_kembali'      => 'baik',
+            'catatan'              => 'Diajukan oleh peminjam',
+            'created_at'           => $sekarang,
+            'updated_at'           => $sekarang,
+        ]);
 
 
         /*

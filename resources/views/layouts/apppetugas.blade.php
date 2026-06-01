@@ -18,14 +18,17 @@
 
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
 
     <div class="wrapper">
 
+        {{-- NAVBAR --}}
         @include('layouts.petugas.navbar')
 
+        {{-- SIDEBAR --}}
         @include('layouts.petugas.sidebar')
 
+        {{-- CONTENT --}}
         <div class="content-wrapper">
 
             <section class="content pt-4">
@@ -40,6 +43,7 @@
 
         </div>
 
+        {{-- FOOTER --}}
         @include('layouts.petugas.footer')
 
     </div>

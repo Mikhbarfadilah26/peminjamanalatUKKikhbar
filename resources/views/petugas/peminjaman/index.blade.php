@@ -39,27 +39,17 @@
 
 
     {{-- ALERT --}}
-    @if(session('success'))
+@if(session('success'))
+<div class="alert alert-success alert-dismissible fade show">
+    {{ session('success') }}
+</div>
+@endif
 
-        <div class="alert alert-success">
-
-            {{ session('success') }}
-
-        </div>
-
-    @endif
-
-
-    @if(session('error'))
-
-        <div class="alert alert-danger">
-
-            {{ session('error') }}
-
-        </div>
-
-    @endif
-
+@if(session('error'))
+<div class="alert alert-danger alert-dismissible fade show">
+    {{ session('error') }}
+</div>
+@endif
 
 
     <div class="card shadow border-0">

@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class ControllerPeminjamanPetugas extends Controller
 {
-
     /*
     |--------------------------------------------------------------------------
     | INDEX
@@ -17,7 +16,6 @@ class ControllerPeminjamanPetugas extends Controller
     */
     public function index()
     {
-
         $data = ModelPeminjaman::with([
             'user',
             'alat'
@@ -29,10 +27,7 @@ class ControllerPeminjamanPetugas extends Controller
             'petugas.peminjaman.index',
             compact('data')
         );
-
     }
-
-
 
     /*
     |--------------------------------------------------------------------------
@@ -41,52 +36,42 @@ class ControllerPeminjamanPetugas extends Controller
     */
     public function approve($id)
     {
+        $pinjam = ModelPeminjaman::with('user')->findOrFail($id);
 
-        $pinjam = ModelPeminjaman::findOrFail($id);
-
-        // cek status
-        if($pinjam->status != 'pending'){
+        if ($pinjam->status != 'pending') {
 
             return back()->with(
                 'error',
-                'Status sudah diproses'
+                'Status peminjaman sudah diproses'
             );
-
         }
 
-        // kurangi stok alat
         $alat = ModelAlat::findOrFail($pinjam->alat_id);
 
-        if($alat->stok < $pinjam->jumlah){
+        if ($alat->stok < $pinjam->jumlah) {
 
             return back()->with(
                 'error',
                 'Stok alat tidak mencukupi'
             );
-
         }
 
+        // kurangi stok
         $alat->update([
-
             'stok' => $alat->stok - $pinjam->jumlah
-
         ]);
 
         // update status
         $pinjam->update([
-
             'status' => 'approved'
-
         ]);
 
         return back()->with(
             'success',
-            'Peminjaman berhasil disetujui'
+            '✅ Anda telah menyetujui peminjaman atas nama ' .
+            ($pinjam->user->nama ?? 'Peminjam')
         );
-
     }
-
-
 
     /*
     |--------------------------------------------------------------------------
@@ -95,32 +80,26 @@ class ControllerPeminjamanPetugas extends Controller
     */
     public function reject($id)
     {
+        $pinjam = ModelPeminjaman::with('user')->findOrFail($id);
 
-        $pinjam = ModelPeminjaman::findOrFail($id);
-
-        if($pinjam->status != 'pending'){
+        if ($pinjam->status != 'pending') {
 
             return back()->with(
                 'error',
-                'Status sudah diproses'
+                'Status peminjaman sudah diproses'
             );
-
         }
 
         $pinjam->update([
-
             'status' => 'rejected'
-
         ]);
 
         return back()->with(
-            'success',
-            'Peminjaman berhasil ditolak'
+            'error',
+            '❌ Anda telah menolak peminjaman atas nama ' .
+            ($pinjam->user->nama ?? 'Peminjam')
         );
-
     }
-
-
 
     /*
     |--------------------------------------------------------------------------
@@ -129,7 +108,6 @@ class ControllerPeminjamanPetugas extends Controller
     */
     public function edit($id)
     {
-
         $data = ModelPeminjaman::with([
             'user',
             'alat'
@@ -139,10 +117,7 @@ class ControllerPeminjamanPetugas extends Controller
             'petugas.peminjaman.edit',
             compact('data')
         );
-
     }
-
-
 
     /*
     |--------------------------------------------------------------------------
@@ -151,33 +126,25 @@ class ControllerPeminjamanPetugas extends Controller
     */
     public function update(Request $request, $id)
     {
-
         $request->validate([
-
             'jumlah' => 'required|numeric|min:1',
             'tanggal_pinjam' => 'required'
-
         ]);
 
         $pinjam = ModelPeminjaman::findOrFail($id);
 
         $pinjam->update([
-
             'jumlah' => $request->jumlah,
             'tanggal_pinjam' => $request->tanggal_pinjam
-
         ]);
 
         return redirect()
-        ->route('petugas.peminjaman')
-        ->with(
-            'success',
-            'Data berhasil diupdate'
-        );
-
+            ->route('petugas.peminjaman')
+            ->with(
+                'success',
+                'Data peminjaman berhasil diupdate'
+            );
     }
-
-
 
     /*
     |--------------------------------------------------------------------------
@@ -186,29 +153,24 @@ class ControllerPeminjamanPetugas extends Controller
     */
     public function destroy($id)
     {
+        $pinjam = ModelPeminjaman::with('user')->findOrFail($id);
 
-        $pinjam = ModelPeminjaman::findOrFail($id);
-
-        // jika approved balikan stok
-        if($pinjam->status == 'approved'){
+        if ($pinjam->status == 'approved') {
 
             $alat = ModelAlat::findOrFail($pinjam->alat_id);
 
             $alat->update([
-
                 'stok' => $alat->stok + $pinjam->jumlah
-
             ]);
-
         }
+
+        $nama = $pinjam->user->nama ?? 'Peminjam';
 
         $pinjam->delete();
 
         return back()->with(
             'success',
-            'Data berhasil dihapus'
+            'Data peminjaman atas nama ' . $nama . ' berhasil dihapus'
         );
-
     }
-
 }
